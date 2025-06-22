@@ -1,6 +1,6 @@
 # General Custom Data
 
-A vanilla-data alligned custom-data retriever, writer, and ticker.
+General Custom Data is a vanilla-data alligned custom-data retriever, writer, and ticker.
 
 Currently not fully featured.
 
