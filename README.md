@@ -8,6 +8,7 @@ Currently not fully featured.
 
 ### Item
 
+```txt
 [Compound] minecraft:custom_data
 |- [List] modifiers
 | |- [Compound]
@@ -19,5 +20,6 @@ Currently not fully featured.
 |- [List] status_effects
 | |- [Compound]
 |   |- [String] id: `namespace:path`.
-|   |- [int] duration: >= 1.
-|   \- [int] amplifier: >= 0.
+|   |- [int] duration: Any.
+\   \- [int] amplifier: Any.
+```
