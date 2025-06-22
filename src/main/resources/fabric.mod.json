@@ -1,0 +1,52 @@
+{
+    "schemaVersion": 1,
+    "id": "general-custom-data",
+    "version": "${version}",
+    "name": "General Custom Data",
+    "description": "A vanilla-data alligned custom-data retriever, writer, and ticker.",
+    "authors": [
+        {
+            "name": "CookedSeafood",
+            "contact": {
+                "homepage": "https://github.com/CookedSeafood"
+            }
+        }
+    ],
+    "contact": {
+        "homepage": "https://modrinth.com/mod/general-custom-data",
+        "sources": "https://github.com/CookedSeafood/general-custom-data"
+    },
+    "license": "GNU-GPL-3.0",
+    "icon": "assets/general-custom-data/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "net.cookedseafood.generalcustomdata.GeneralCustomData"
+        ]
+    },
+    "mixins": [
+        "general-custom-data.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.14",
+        "minecraft": "~1.21.5",
+        "java": ">=21",
+        "fabric-api": "*",
+        "generic-registry": ">=1.0.0",
+        "candy-wrapper": ">=0.7.4"
+    },
+    "suggests": {
+        "another-mod": "*"
+    },
+    "custom": {
+        "loom:injected_interfaces": {
+            "net/minecraft/class_1309": [
+                "net/cookedseafood/generalcustomdata/api/LivingEntityApi"
+            ],
+            "net/minecraft/class_1799": [
+                "net/cookedseafood/generalcustomdata/api/ItemStackApi"
+            ]
+        }
+    },
+    "accessWidener": "general-custom-data.accesswidener"
+}
