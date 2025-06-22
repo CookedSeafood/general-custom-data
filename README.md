@@ -6,8 +6,6 @@ Currently not fully featured.
 
 ## Data Structure
 
-### Item
-
 ```txt
 [Compound] minecraft:custom_data
 |- [List] modifiers
@@ -17,9 +15,56 @@ Currently not fully featured.
 |   |- [String] id: Any.
 |   |- [String] operation: Can be `add_value`, `add_multiplied_base` and `add_multiplied_total`.
 |   \- [String] slot: Can be `mainhand`, `offhand`, `feet`, `legs`, `chest` and `head`.
+|- [String] id: `namespace:path`.
 |- [List] status_effects
 | |- [Compound]
 |   |- [String] id: `namespace:path`.
 |   |- [int] duration: Any.
 \   \- [int] amplifier: Any.
+```
+
+## Method
+
+```java
+public final class ItemStack{
+    public String getCustomId() {}
+
+    public String getCustomIdOrId() {}
+
+    public NbtList getCustomModifiers() {}
+
+    public NbtList getCustomStatusEffects() {}
+}
+```
+
+```java
+public abstract class LivingEntity{
+    public NbtCompound getCustomStatusEffects() {}
+
+    public void setCustomStatusEffects(NbtCompound customStatusEffects) {}
+
+    public ServerCustomStatusEffectManager getCustomStatusEffectManager() {}
+
+    public boolean hasCustomStatusEffect(CustomStatusEffectIdentifier id) {}
+
+    public <T> T modifyCustomStatusEffectManager(Function<ServerCustomStatusEffectManager, T> action) {}
+
+    public void modifyCustomStatusEffectManager(Consumer<ServerCustomStatusEffectManager> action) {}
+
+    public boolean addCustomStatusEffect(CustomStatusEffect statusEffect) {}
+
+    public boolean setCustomStatusEffect(CustomStatusEffect statusEffect) {}
+
+    public CustomStatusEffectPlaylist removeCustomStatusEffect(CustomStatusEffectIdentifier id) {}
+
+    public void clearCustomStatusEffect() {}
+
+    public void tickCustomStatusEffect() {}
+
+    public double getCustomModifiedValue(String attribute, double base) {}
+
+    public NbtList getCustomModifiers(String attribute) {}
+
+    public NbtList getCustomModifiers() {}
+}
 ```
