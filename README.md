@@ -6,13 +6,10 @@ Currently not fully featured.
 
 ## Command
 
-`/custom effect list [<entity>]` Print a list of custom effects on the `entity`.
-
-`/custom effect add <entity> <effect> [<duration|infinite>] [<amplifier>]` Add custom effect to `entity`.
-
-`/custom effect clear [<entity>]` Remove custom effect from `entity`.
-
-`/custom reset [<effect>]` Set corresponding component to a new empty component.
+- `/custom effect list [<entity>]` Print a list of custom effects on the `entity`.
+- `/custom effect add <entity> <effect> [<duration|infinite>] [<amplifier>]` Add custom effect to `entity`.
+- `/custom effect clear [<entity>]` Remove custom effect from `entity`.
+- `/custom reset [<effect>]` Set corresponding component to a new empty component.
 
 ## Data Structure
 
