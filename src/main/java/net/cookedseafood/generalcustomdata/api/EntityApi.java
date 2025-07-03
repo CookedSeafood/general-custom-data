@@ -1,8 +1,6 @@
 package net.cookedseafood.generalcustomdata.api;
 
-import net.minecraft.nbt.NbtList;
-
-public interface ItemStackApi {
+public interface EntityApi {
     default String getCustomId() {
         return null;
     }
@@ -11,14 +9,6 @@ public interface ItemStackApi {
     }
 
     default String getCustomIdOrId() {
-        return null;
-    }
-
-    default NbtList getCustomModifiers() {
-        return null;
-    }
-
-    default NbtList getCustomStatusEffects() {
         return null;
     }
 }

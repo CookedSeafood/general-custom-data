@@ -23,11 +23,16 @@ Currently not fully featured.
 |   |- [String] operation: Can be `add_value`, `add_multiplied_base` and `add_multiplied_total`.
 |   \- [String] slot: Can be `mainhand`, `offhand`, `feet`, `legs`, `chest` and `head`.
 |- [String] id: `namespace:path`.
-|- [List] status_effects
-| |- [Compound]
-|   |- [String] id: `namespace:path`.
-|   |- [int] duration: Any.
-\   \- [int] amplifier: Any.
+\- [List] status_effects
+  |- [Compound]
+    |- [String] id: `namespace:path`.
+    |- [int] duration: Any.
+    \- [int] amplifier: Any.
+```
+
+```txt
+[Compound] minecraft:data
+\- [String] id: `namespace:path`.
 ```
 
 ## Method
@@ -36,11 +41,23 @@ Currently not fully featured.
 public final class ItemStack{
     public String getCustomId() {}
 
+    public void setCustomId(String id) {}
+
     public String getCustomIdOrId() {}
 
     public NbtList getCustomModifiers() {}
 
     public NbtList getCustomStatusEffects() {}
+}
+```
+
+```java
+public final class Entity{
+    public String getCustomId() {}
+
+    public void setCustomId(String id) {}
+
+    public String getCustomIdOrId() {}
 }
 ```
 

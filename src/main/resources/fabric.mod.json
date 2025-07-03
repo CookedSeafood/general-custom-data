@@ -40,6 +40,9 @@
     },
     "custom": {
         "loom:injected_interfaces": {
+            "net/minecraft/class_1297": [
+                "net/cookedseafood/generalcustomdata/api/EntityApi"
+            ],
             "net/minecraft/class_1309": [
                 "net/cookedseafood/generalcustomdata/api/LivingEntityApi"
             ],
