@@ -2,6 +2,7 @@ package net.cookedseafood.generalcustomdata.mixin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.cookedseafood.generalcustomdata.api.EntityApi;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
@@ -10,6 +11,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -42,6 +45,31 @@ public abstract class EntityMixin implements EntityApi {
         return customId == "" ? EntityType.getId(this.getType()).toString() : customId;
     }
 
+    @Nullable
+    @Override
+    public Entity getCustomOwner() {
+        return this.getWorld().getEntity(UUID.fromString(((Entity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getString("owner", "00000000-0000-0000-0000-0000000000000000")));
+    }
+
+    @Override
+    public void setCustomOwner(Entity owner) {
+        ((Entity)(Object)this).setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(
+            ((Entity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().copyFrom(
+                new NbtCompound(
+                    new HashMap<>(
+                        Map.<String, NbtElement>of(
+                            "owner",
+                            NbtString.of(owner.getUuidAsString())
+                        )
+                    )
+                )
+            )
+        ));
+    }
+
     @Shadow
     public abstract EntityType<?> getType();
+
+    @Shadow
+    public abstract World getWorld();
 }

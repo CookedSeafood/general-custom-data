@@ -32,7 +32,8 @@ Currently not fully featured.
 
 ```txt
 [Compound] minecraft:data
-\- [String] id: `namespace:path`.
+|- [String] id: `namespace:path`.
+\- [String] owner: UUID.
 ```
 
 ## Method
@@ -58,6 +59,10 @@ public final class Entity{
     public void setCustomId(String id) {}
 
     public String getCustomIdOrId() {}
+
+    public Entity getCustomOwner() {}
+
+    public void setCustomOwner(Entity owner) {}
 }
 ```
 

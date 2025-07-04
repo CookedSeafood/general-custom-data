@@ -1,5 +1,7 @@
 package net.cookedseafood.generalcustomdata.api;
 
+import net.minecraft.entity.Entity;
+
 public interface EntityApi {
     default String getCustomId() {
         return null;
@@ -10,5 +12,12 @@ public interface EntityApi {
 
     default String getCustomIdOrId() {
         return null;
+    }
+
+    default Entity getCustomOwner() {
+        return null;
+    }
+
+    default void setCustomOwner(Entity owner) {
     }
 }
