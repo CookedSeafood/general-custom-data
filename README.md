@@ -24,7 +24,7 @@ Currently not fully featured.
 |   \- [String] slot: Can be `mainhand`, `offhand`, `feet`, `legs`, `chest` and `head`.
 |- [String] id: `namespace:path`.
 \- [List] status_effects
-  |- [Compound]
+  \- [Compound]
     |- [String] id: `namespace:path`.
     |- [int] duration: Any.
     \- [int] amplifier: Any.
@@ -32,6 +32,7 @@ Currently not fully featured.
 
 ```txt
 [Compound] minecraft:data
+|- [Byte] explosion_radius: Any.
 |- [String] id: `namespace:path`.
 \- [String] owner: UUID.
 ```
@@ -63,6 +64,10 @@ public final class Entity{
     public Entity getCustomOwner() {}
 
     public void setCustomOwner(Entity owner) {}
+
+    public byte getCustomExplosionRadius() {}
+
+    public void setCustomExplosionRadius(byte radius) {}
 }
 ```
 

@@ -20,4 +20,11 @@ public interface EntityApi {
 
     default void setCustomOwner(Entity owner) {
     }
+
+    default byte getCustomExplosionRadius() {
+        return 0;
+    }
+
+    default void setCustomExplosionRadius(byte radius) {
+    }
 }

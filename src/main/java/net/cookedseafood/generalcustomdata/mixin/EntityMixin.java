@@ -8,6 +8,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtString;
@@ -60,6 +61,27 @@ public abstract class EntityMixin implements EntityApi {
                         Map.<String, NbtElement>of(
                             "owner",
                             NbtString.of(owner.getUuidAsString())
+                        )
+                    )
+                )
+            )
+        ));
+    }
+
+    @Override
+    public byte getCustomExplosionRadius() {
+        return ((Entity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getByte("explosion_radius", (byte)0);
+    }
+
+    @Override
+    public void setCustomExplosionRadius(byte radius) {
+        ((Entity)(Object)this).setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(
+            ((Entity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().copyFrom(
+                new NbtCompound(
+                    new HashMap<>(
+                        Map.<String, NbtElement>of(
+                            "explosion_radius",
+                            NbtByte.of(radius)
                         )
                     )
                 )
