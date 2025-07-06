@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtShort;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -61,6 +62,27 @@ public abstract class EntityMixin implements EntityApi {
                         Map.<String, NbtElement>of(
                             "owner",
                             NbtString.of(owner.getUuidAsString())
+                        )
+                    )
+                )
+            )
+        ));
+    }
+
+    @Override
+    public short getCustomFuse() {
+        return ((Entity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getShort("fuse", (short)0);
+    }
+
+    @Override
+    public void setCustomFuse(short fuse) {
+        ((Entity)(Object)this).setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(
+            ((Entity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().copyFrom(
+                new NbtCompound(
+                    new HashMap<>(
+                        Map.<String, NbtElement>of(
+                            "fuse",
+                            NbtShort.of(fuse)
                         )
                     )
                 )

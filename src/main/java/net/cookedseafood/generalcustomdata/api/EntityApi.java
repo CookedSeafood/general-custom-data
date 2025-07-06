@@ -21,6 +21,13 @@ public interface EntityApi {
     default void setCustomOwner(Entity owner) {
     }
 
+    default short getCustomFuse() {
+        return 0;
+    }
+
+    default void setCustomFuse(short fuse) {
+    }
+
     default byte getCustomExplosionRadius() {
         return 0;
     }

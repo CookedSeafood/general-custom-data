@@ -33,6 +33,7 @@ Currently not fully featured.
 ```txt
 [Compound] minecraft:data
 |- [Byte] explosion_radius: Any.
+|- [Short] fuse: Any.
 |- [String] id: `namespace:path`.
 \- [String] owner: UUID.
 ```
@@ -64,6 +65,10 @@ public final class Entity{
     public Entity getCustomOwner() {}
 
     public void setCustomOwner(Entity owner) {}
+
+    public short getCustomFuse() {}
+
+    public void setCustomFuse(short fuse) {}
 
     public byte getCustomExplosionRadius() {}
 
