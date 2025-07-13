@@ -33,7 +33,7 @@
         "java": ">=21",
         "fabric-api": "*",
         "generic-registry": ">=1.0.0",
-        "candy-wrapper": ">=0.7.4"
+        "candy-wrapper": ">=0.7.5"
     },
     "suggests": {
         "another-mod": "*"

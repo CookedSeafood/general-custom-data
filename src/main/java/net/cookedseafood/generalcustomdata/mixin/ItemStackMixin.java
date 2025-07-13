@@ -42,6 +42,33 @@ public abstract class ItemStackMixin implements ItemStackApi {
     }
 
     @Override
+    public String getCustomRarity() {
+        return ((ItemStack)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getString("rarity", "");
+    }
+
+    @Override
+    public void setCustomRarity(String rarity) {
+        ((ItemStack)(Object)this).set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(
+            ((ItemStack)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().copyFrom(
+                new NbtCompound(
+                    new HashMap<>(
+                        Map.<String, NbtElement>of(
+                            "rarity",
+                            NbtString.of(rarity)
+                        )
+                    )
+                )
+            )
+        ));
+    }
+
+    @Override
+    public String getCustomRarityOrRarity() {
+        String customRarity = this.getCustomRarity();
+        return customRarity == "" ? ((ItemStack)(Object)this).getRarity().asString() : customRarity;
+    }
+
+    @Override
     public NbtList getCustomModifiers() {
         return ((ItemStack)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getListOrEmpty("modifiers");
     }

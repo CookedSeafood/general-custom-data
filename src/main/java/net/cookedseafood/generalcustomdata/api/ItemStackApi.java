@@ -14,6 +14,17 @@ public interface ItemStackApi {
         return null;
     }
 
+    default String getCustomRarity() {
+        return null;
+    }
+
+    default void setCustomRarity(String rarity) {
+    }
+
+    default String getCustomRarityOrRarity() {
+        return null;
+    }
+
     default NbtList getCustomModifiers() {
         return null;
     }
