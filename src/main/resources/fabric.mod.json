@@ -28,12 +28,12 @@
         "general-custom-data.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.16.14",
+        "fabricloader": ">=0.17.2",
         "minecraft": "~1.21.5",
         "java": ">=21",
         "fabric-api": "*",
         "generic-registry": ">=1.0.0",
-        "candy-wrapper": ">=0.7.5"
+        "candy-wrapper": ">=0.8.0"
     },
     "suggests": {
         "another-mod": "*"
