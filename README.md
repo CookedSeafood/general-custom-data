@@ -8,7 +8,7 @@ Currently not fully featured.
 
 - `/custom effect list [<entity>]` Print a list of custom effects on the `entity`.
 - `/custom effect add <entity> <effect> [<duration|infinite>] [<amplifier>]` Add custom effect to `entity`.
-- `/custom effect clear [<entity>]` Remove custom effect from `entity`.
+- `/custom effect clear [<entity>] [<effect>]` Remove custom effect from `entity`.
 - `/custom reset [<effect>]` Set corresponding component to a new empty component.
 
 ## Data Structure
