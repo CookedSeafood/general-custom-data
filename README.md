@@ -62,7 +62,7 @@ public final class ItemStack{
 ```
 
 ```java
-public final class Entity{
+public abstract class Entity{
     public String getCustomId() {}
 
     public void setCustomId(String id) {}
