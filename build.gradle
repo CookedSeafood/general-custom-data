@@ -30,6 +30,15 @@ repositories {
 }
 
 loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "general-custom-data" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+
     accessWidenerPath = file("src/main/resources/general-custom-data.accesswidener")
 }
 

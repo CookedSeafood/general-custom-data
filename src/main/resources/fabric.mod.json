@@ -21,19 +21,26 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "net.cookedseafood.generalcustomdata.GeneralCustomData"
+            "net.hederamc.gcd.GeneralCustomData"
+        ],
+        "client": [
+            "net.hederamc.gcd.GeneralCustomDataClient"
         ]
     },
     "mixins": [
-        "general-custom-data.mixins.json"
+        "general-custom-data.mixins.json",
+        {
+            "config": "general-custom-data.client.mixins.json",
+            "environment": "client"
+        }
     ],
     "depends": {
-        "fabricloader": ">=0.17.2",
+        "fabricloader": ">=0.18.1",
         "minecraft": "~1.21.5",
         "java": ">=21",
         "fabric-api": "*",
-        "generic-registry": ">=1.0.0",
-        "candy-wrapper": ">=0.8.0"
+        "generic-registry": ">=2.0.0",
+        "candy-wrapper": ">=2.0.1"
     },
     "suggests": {
         "another-mod": "*"
@@ -41,13 +48,13 @@
     "custom": {
         "loom:injected_interfaces": {
             "net/minecraft/class_1297": [
-                "net/cookedseafood/generalcustomdata/api/EntityApi"
+                "net/hederamc/gcd/api/EntityApi"
             ],
             "net/minecraft/class_1309": [
-                "net/cookedseafood/generalcustomdata/api/LivingEntityApi"
+                "net/hederamc/gcd/api/LivingEntityApi"
             ],
             "net/minecraft/class_1799": [
-                "net/cookedseafood/generalcustomdata/api/ItemStackApi"
+                "net/hederamc/gcd/api/ItemStackApi"
             ]
         }
     },

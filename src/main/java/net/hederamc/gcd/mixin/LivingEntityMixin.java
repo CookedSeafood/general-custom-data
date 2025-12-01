@@ -1,12 +1,12 @@
-package net.cookedseafood.generalcustomdata.mixin;
+package net.hederamc.gcd.mixin;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.cookedseafood.generalcustomdata.api.LivingEntityApi;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffect;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffectIdentifier;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffectPlaylist;
-import net.cookedseafood.generalcustomdata.effect.ServerCustomStatusEffectManager;
+import net.hederamc.gcd.api.LivingEntityApi;
+import net.hederamc.gcd.effect.CustomStatusEffect;
+import net.hederamc.gcd.effect.CustomStatusEffectIdentifier;
+import net.hederamc.gcd.effect.CustomStatusEffectPlaylist;
+import net.hederamc.gcd.effect.ServerCustomStatusEffectManager;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EquipmentSlot;
@@ -28,7 +28,7 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
         at = @At("RETURN")
     )
     private void tickCustomStatusEffect(CallbackInfo info) {
-        ((LivingEntity)(Object)this).tickCustomStatusEffect();
+        this.tickCustomStatusEffect();
     }
 
     @Inject(
@@ -40,7 +40,7 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
         )
     )
     private void applyCustomStatusEffects(CallbackInfo info) {
-        ((LivingEntity)(Object)this).getActiveItem().getCustomStatusEffects().stream()
+        this.getActiveItem().getCustomStatusEffects().stream()
             .map(NbtCompound.class::cast)
             .map(CustomStatusEffect::fromNbt)
             .forEach(this::addCustomStatusEffect);
@@ -122,7 +122,7 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
             .filter(modifier -> "add_value".equals(modifier.getString("operation", "add_value")))
             .forEach(modifier -> modified.add(modifier.getDouble("base", 0d)));
 
-        MutableDouble multiplier = new MutableDouble(1);
+        MutableDouble multiplier = new MutableDouble(1d);
 
         modifiers.stream()
             .map(nbtElement -> (NbtCompound)nbtElement)
@@ -134,7 +134,7 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
         modifiers.stream()
             .map(nbtElement -> (NbtCompound)nbtElement)
             .filter(modifier -> "add_multiplied_total".equals(modifier.getString("operation", "add_value")))
-            .forEach(modifier -> modified.setValue((1 + modifier.getDouble("base", 0d)) * modified.getValue()));
+            .forEach(modifier -> modified.setValue((1d + modifier.getDouble("base", 0d)) * modified.getValue()));
 
         return modified.doubleValue();
     }
@@ -149,14 +149,16 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
     @Override
     public NbtList getCustomModifiers() {
         NbtList modifiers = new NbtList();
-        this.getEquippedStack(EquipmentSlot.MAINHAND)   .getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> "mainhand" .equals(modifier.getString("slot", "mainhand"))).forEach(modifier -> modifiers.add(modifier));
-        this.getEquippedStack(EquipmentSlot.OFFHAND)    .getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> "offhand"  .equals(modifier.getString("slot", "mainhand"))).forEach(modifier -> modifiers.add(modifier));
-        this.getEquippedStack(EquipmentSlot.FEET)       .getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> "feet"     .equals(modifier.getString("slot", "mainhand"))).forEach(modifier -> modifiers.add(modifier));
-        this.getEquippedStack(EquipmentSlot.LEGS)       .getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> "legs"     .equals(modifier.getString("slot", "mainhand"))).forEach(modifier -> modifiers.add(modifier));
-        this.getEquippedStack(EquipmentSlot.CHEST)      .getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> "chest"    .equals(modifier.getString("slot", "mainhand"))).forEach(modifier -> modifiers.add(modifier));
-        this.getEquippedStack(EquipmentSlot.HEAD)       .getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> "head"     .equals(modifier.getString("slot", "mainhand"))).forEach(modifier -> modifiers.add(modifier));
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            String name = slot.getName();
+            this.getEquippedStack(slot).getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> modifier.getString("slot", name).equals(name)).forEach(modifier -> modifiers.add(modifier));
+        }
+
         return modifiers;
     }
+
+    @Shadow
+    public abstract ItemStack getActiveItem();
 
     @Shadow
     public abstract ItemStack getEquippedStack(EquipmentSlot slot);

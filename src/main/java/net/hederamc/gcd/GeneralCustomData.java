@@ -1,6 +1,6 @@
-package net.cookedseafood.generalcustomdata;
+package net.hederamc.gcd;
 
-import net.cookedseafood.generalcustomdata.command.CustomCommand;
+import net.hederamc.gcd.command.CustomCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
@@ -14,8 +14,8 @@ public class GeneralCustomData implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final byte VERSION_MAJOR = 0;
-    public static final byte VERSION_MINOR = 2;
+    public static final byte VERSION_MAJOR = 1;
+    public static final byte VERSION_MINOR = 0;
     public static final byte VERSION_PATCH = 0;
 
     public static final String MOD_NAMESPACE = "general_custom_data";

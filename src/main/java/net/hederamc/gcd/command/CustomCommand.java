@@ -1,4 +1,4 @@
-package net.cookedseafood.generalcustomdata.command;
+package net.hederamc.gcd.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -8,11 +8,11 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import net.cookedseafood.genericregistry.registry.Registries;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffect;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffectIdentifier;
-import net.cookedseafood.generalcustomdata.effect.ServerCustomStatusEffectManager;
-import net.cookedseafood.generalcustomdata.suggestion.CustomStatusEffectSuggestionProvider;
+import net.hederamc.gr.registry.Registries;
+import net.hederamc.gcd.effect.CustomStatusEffect;
+import net.hederamc.gcd.effect.CustomStatusEffectIdentifier;
+import net.hederamc.gcd.effect.ServerCustomStatusEffectManager;
+import net.hederamc.gcd.suggestion.CustomStatusEffectSuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;

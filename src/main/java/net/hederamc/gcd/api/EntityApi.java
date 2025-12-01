@@ -1,4 +1,4 @@
-package net.cookedseafood.generalcustomdata.api;
+package net.hederamc.gcd.api;
 
 import net.minecraft.entity.Entity;
 

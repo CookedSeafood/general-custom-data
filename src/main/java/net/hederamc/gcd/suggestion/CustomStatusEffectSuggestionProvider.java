@@ -1,13 +1,13 @@
-package net.cookedseafood.generalcustomdata.suggestion;
+package net.hederamc.gcd.suggestion;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import java.util.concurrent.CompletableFuture;
-import net.cookedseafood.genericregistry.registry.Registries;
-import net.cookedseafood.genericregistry.registry.Registry;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffectIdentifier;
+import net.hederamc.gr.registry.Registries;
+import net.hederamc.gr.registry.Registry;
+import net.hederamc.gcd.effect.CustomStatusEffectIdentifier;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.ServerCommandSource;
 

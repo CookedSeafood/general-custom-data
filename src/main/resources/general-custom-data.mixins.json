@@ -1,6 +1,6 @@
 {
     "required": true,
-    "package": "net.cookedseafood.generalcustomdata.mixin",
+    "package": "net.hederamc.gcd.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
         "EntityMixin",

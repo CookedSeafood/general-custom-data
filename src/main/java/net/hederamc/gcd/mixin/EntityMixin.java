@@ -1,9 +1,9 @@
-package net.cookedseafood.generalcustomdata.mixin;
+package net.hederamc.gcd.mixin;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import net.cookedseafood.generalcustomdata.api.EntityApi;
+import net.hederamc.gcd.api.EntityApi;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;

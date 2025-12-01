@@ -1,4 +1,4 @@
-package net.cookedseafood.generalcustomdata.effect;
+package net.hederamc.gcd.effect;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package net.cookedseafood.generalcustomdata.effect;
+package net.hederamc.gcd.effect;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import net.cookedseafood.genericregistry.registry.Registries;
+import net.hederamc.gr.registry.Registries;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;

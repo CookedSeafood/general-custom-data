@@ -1,11 +1,11 @@
-package net.cookedseafood.generalcustomdata.api;
+package net.hederamc.gcd.api;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffect;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffectIdentifier;
-import net.cookedseafood.generalcustomdata.effect.CustomStatusEffectPlaylist;
-import net.cookedseafood.generalcustomdata.effect.ServerCustomStatusEffectManager;
+import net.hederamc.gcd.effect.CustomStatusEffect;
+import net.hederamc.gcd.effect.CustomStatusEffectIdentifier;
+import net.hederamc.gcd.effect.CustomStatusEffectPlaylist;
+import net.hederamc.gcd.effect.ServerCustomStatusEffectManager;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 

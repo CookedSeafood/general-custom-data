@@ -1,4 +1,4 @@
-package net.cookedseafood.generalcustomdata.effect;
+package net.hederamc.gcd.effect;
 
 import java.util.Map;
 import net.minecraft.entity.LivingEntity;
