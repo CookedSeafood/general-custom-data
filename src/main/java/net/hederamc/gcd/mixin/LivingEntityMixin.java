@@ -118,23 +118,23 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
         MutableDouble modified = new MutableDouble(base);
 
         modifiers.stream()
-            .map(nbtElement -> (NbtCompound)nbtElement)
+            .map(NbtCompound.class::cast)
             .filter(modifier -> "add_value".equals(modifier.getString("operation", "add_value")))
             .forEach(modifier -> modified.add(modifier.getDouble("base", 0d)));
 
         MutableDouble multiplier = new MutableDouble(1d);
 
         modifiers.stream()
-            .map(nbtElement -> (NbtCompound)nbtElement)
+            .map(NbtCompound.class::cast)
             .filter(modifier -> "add_multiplied_base".equals(modifier.getString("operation", "add_value")))
             .forEach(modifier -> multiplier.add(modifier.getDouble("base", 0d)));
 
-        modified.setValue(modified.getValue() * multiplier.getValue());
+        modified.setValue(modified.doubleValue() * multiplier.doubleValue());
 
         modifiers.stream()
-            .map(nbtElement -> (NbtCompound)nbtElement)
+            .map(NbtCompound.class::cast)
             .filter(modifier -> "add_multiplied_total".equals(modifier.getString("operation", "add_value")))
-            .forEach(modifier -> modified.setValue((1d + modifier.getDouble("base", 0d)) * modified.getValue()));
+            .forEach(modifier -> modified.setValue((1d + modifier.getDouble("base", 0d)) * modified.doubleValue()));
 
         return modified.doubleValue();
     }
@@ -142,7 +142,10 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
     @Override
     public NbtList getCustomModifiers(String attribute) {
         NbtList modifiers = new NbtList();
-        this.getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> attribute.equals(modifier.getString("attribute", ""))).forEach(modifier -> modifiers.add(modifier));
+        this.getCustomModifiers().stream()
+            .map(NbtCompound.class::cast)
+            .filter(modifier -> attribute.equals(modifier.getString("attribute", "")))
+            .forEach(modifier -> modifiers.add(modifier));
         return modifiers;
     }
 
@@ -151,7 +154,10 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
         NbtList modifiers = new NbtList();
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             String name = slot.getName();
-            this.getEquippedStack(slot).getCustomModifiers().stream().map(nbtElement -> (NbtCompound)nbtElement).filter(modifier -> modifier.getString("slot", name).equals(name)).forEach(modifier -> modifiers.add(modifier));
+            this.getEquippedStack(slot).getCustomModifiers().stream()
+                .map(NbtCompound.class::cast)
+                .filter(modifier -> modifier.getString("slot", name).equals(name))
+                .forEach(modifier -> modifiers.add(modifier));
         }
 
         return modifiers;

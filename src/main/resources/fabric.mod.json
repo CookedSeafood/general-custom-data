@@ -40,7 +40,7 @@
         "java": ">=21",
         "fabric-api": "*",
         "generic-registry": ">=2.0.0",
-        "candy-wrapper": ">=2.0.1"
+        "candy-wrapper": ">=2.0.2"
     },
     "suggests": {
         "another-mod": "*"

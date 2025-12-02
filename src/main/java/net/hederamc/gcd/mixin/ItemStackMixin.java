@@ -10,7 +10,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.util.Rarity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements ItemStackApi {
@@ -65,7 +67,7 @@ public abstract class ItemStackMixin implements ItemStackApi {
     @Override
     public String getCustomRarityOrRarity() {
         String customRarity = this.getCustomRarity();
-        return customRarity == "" ? ((ItemStack)(Object)this).getRarity().asString() : customRarity;
+        return customRarity == "" ? this.getRarity().asString() : customRarity;
     }
 
     @Override
@@ -77,4 +79,7 @@ public abstract class ItemStackMixin implements ItemStackApi {
     public NbtList getCustomStatusEffects() {
         return ((ItemStack)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getListOrEmpty("status_effects");
     }
+
+    @Shadow
+    public abstract Rarity getRarity();
 }
