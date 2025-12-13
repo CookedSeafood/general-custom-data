@@ -13,27 +13,27 @@ Currently not fully featured.
 
 ## Data Structure
 
-![Compound](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/compound.png) **custom_data**: Parent tag.  
-&ensp;|- ![List](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/list.png) **modifiers**  
-&ensp;|&emsp;&nbsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/compound.png)  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **attribute**: `namespace:path`.  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![Double](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/double.png) **base**: Any.  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **id**: Any.  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **operation**: Can be `add_value`, `add_multiplied_base` and `add_multiplied_total`.  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;\\- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **slot**: Can be `mainhand`, `offhand`, `feet`, `legs`, `chest` and `head`.  
-&ensp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **id**: `namespace:path`.  
-&ensp;|- ![List](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/list.png) **status_effects**  
-&ensp;|&emsp;&nbsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/compound.png)  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **id**: `namespace:path`.  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/int.png) **duration**: Any.  
-&ensp;|&emsp;&emsp;&ensp;&nbsp;\\- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/int.png) **amplifier**: Any.  
-&ensp;\\- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **rarity**: Any.
+![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png) **custom_data**: Parent tag.  
+&ensp;|- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **modifiers**  
+&ensp;|&emsp;&nbsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png)  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **attribute**: `namespace:path`.  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![Double](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/double.png) **base**: Any.  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **id**: Any.  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **operation**: Can be `add_value`, `add_multiplied_base` and `add_multiplied_total`.  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;\\- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **slot**: Can be `mainhand`, `offhand`, `feet`, `legs`, `chest` and `head`.  
+&ensp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **id**: `namespace:path`.  
+&ensp;|- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **status_effects**  
+&ensp;|&emsp;&nbsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png)  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **id**: `namespace:path`.  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;|- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/int.png) **duration**: Any.  
+&ensp;|&emsp;&emsp;&ensp;&nbsp;\\- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/int.png) **amplifier**: Any.  
+&ensp;\\- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **rarity**: Any.
 
-![Compound](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/compound.png) **data**: Parent tag.  
-&ensp;|- ![Byte](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/byte.png) **explosion_radius**: Any.  
-&ensp;|- ![Short](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/short.png) **fuse**: Any.  
-&ensp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **id**: `namespace:path`.  
-&ensp;\\- ![String](https://github.com/CookedSeafood/nbtsheet/raw/62168868b43a6a67da11d3520f804ab003c01457/string.png) **owner**: UUID.
+![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png) **data**: Parent tag.  
+&ensp;|- ![Byte](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/byte.png) **explosion_radius**: Any.  
+&ensp;|- ![Short](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/short.png) **fuse**: Any.  
+&ensp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **id**: `namespace:path`.  
+&ensp;\\- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **owner**: UUID.
 
 ## Method
 
