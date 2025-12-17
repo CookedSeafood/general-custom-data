@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityMixin implements LivingEntityApi {
     @Inject(
         method = "tick()V",
-        at = @At("RETURN")
+        at = @At("TAIL")
     )
     private void tickCustomStatusEffect(CallbackInfo info) {
         this.tickCustomStatusEffect();

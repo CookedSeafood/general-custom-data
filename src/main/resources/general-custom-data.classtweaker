@@ -1,0 +1,7 @@
+classTweaker v1 named
+
+transitive-inject-interface net/minecraft/entity/Entity       net/hederamc/gcd/api/EntityApi
+
+transitive-inject-interface net/minecraft/entity/LivingEntity net/hederamc/gcd/api/LivingEntityApi
+
+transitive-inject-interface net/minecraft/item/ItemStack      net/hederamc/gcd/api/ItemStackApi

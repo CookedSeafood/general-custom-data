@@ -35,28 +35,14 @@
         }
     ],
     "depends": {
-        "fabricloader": ">=0.18.1",
+        "fabricloader": ">=0.18.3",
         "minecraft": "~1.21.5",
         "java": ">=21",
         "fabric-api": "*",
         "generic-registry": ">=2.0.0",
-        "candy-wrapper": ">=2.0.2"
+        "candy-wrapper": ">=2.0.3"
     },
-    "suggests": {
-        "another-mod": "*"
-    },
-    "custom": {
-        "loom:injected_interfaces": {
-            "net/minecraft/class_1297": [
-                "net/hederamc/gcd/api/EntityApi"
-            ],
-            "net/minecraft/class_1309": [
-                "net/hederamc/gcd/api/LivingEntityApi"
-            ],
-            "net/minecraft/class_1799": [
-                "net/hederamc/gcd/api/ItemStackApi"
-            ]
-        }
-    },
-    "accessWidener": "general-custom-data.accesswidener"
+    "suggests": {},
+    "custom": {},
+    "accessWidener": "general-custom-data.classtweaker"
 }

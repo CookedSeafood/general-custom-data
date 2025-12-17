@@ -39,7 +39,7 @@ loom {
         }
     }
 
-    accessWidenerPath = file("src/main/resources/general-custom-data.accesswidener")
+    accessWidenerPath = file("src/main/resources/general-custom-data.classtweaker")
 }
 
 dependencies {
@@ -51,9 +51,9 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "maven.modrinth:candy-wrapper:${project.cw_version}"
-
     modImplementation "maven.modrinth:generic-registry:${project.gr_version}"
+
+    modImplementation "maven.modrinth:candy-wrapper:${project.cw_version}"
 }
 
 processResources {
