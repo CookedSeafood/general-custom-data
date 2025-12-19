@@ -41,7 +41,7 @@
         "java": ">=21",
         "fabric-api": "*",
         "generic-registry": ">=2.0.0",
-        "candy-wrapper": ">=2.0.4"
+        "candy-wrapper": ">=2.0.5"
     },
     "suggests": {},
     "custom": {
