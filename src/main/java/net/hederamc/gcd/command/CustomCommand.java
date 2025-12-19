@@ -27,7 +27,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 public class CustomCommand {
-    private static final SimpleCommandExceptionType UNREGISTED_EXCEPTION =
+    private static final SimpleCommandExceptionType UNREGISTED_EFFECT_EXCEPTION =
         new SimpleCommandExceptionType(Text.literal("The effect is not registed."));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
@@ -136,7 +136,7 @@ public class CustomCommand {
     public static int executeGiveEffect(ServerCommandSource source, Collection<? extends Entity> targets, String effect, int duration, int amplifier) throws CommandSyntaxException {
         CustomStatusEffectIdentifier effectId = Registries.get(CustomStatusEffectIdentifier.class, Identifier.of(effect.replace('.', ':')));
         if (effectId == null) {
-            UNREGISTED_EXCEPTION.create();
+            UNREGISTED_EFFECT_EXCEPTION.create();
         }
 
         Iterator<? extends Entity> iterator = targets.iterator();
@@ -195,7 +195,7 @@ public class CustomCommand {
     public static int executeClearEffect(ServerCommandSource source, Collection<? extends Entity> targets, String effect) {
         CustomStatusEffectIdentifier effectId = Registries.get(CustomStatusEffectIdentifier.class, Identifier.of(effect.replace('.', ':')));
         if (effectId == null) {
-            UNREGISTED_EXCEPTION.create();
+            UNREGISTED_EFFECT_EXCEPTION.create();
         }
 
         Iterator<? extends Entity> iterator = targets.iterator();

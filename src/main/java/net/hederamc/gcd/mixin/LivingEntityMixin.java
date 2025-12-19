@@ -1,5 +1,7 @@
 package net.hederamc.gcd.mixin;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import net.hederamc.gcd.api.LivingEntityApi;
@@ -13,6 +15,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.spongepowered.asm.mixin.Mixin;
@@ -54,7 +57,16 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
     @Override
     public void setCustomStatusEffects(NbtCompound customStatusEffects) {
         ((LivingEntity)(Object)this).setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(
-            ((LivingEntity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().copyFrom(customStatusEffects)
+            ((LivingEntity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().copyFrom(
+                new NbtCompound(
+                    new HashMap<>(
+                        Map.<String, NbtElement>of(
+                            "status_effect",
+                            customStatusEffects
+                        )
+                    )
+                )
+            )
         ));
     }
 
