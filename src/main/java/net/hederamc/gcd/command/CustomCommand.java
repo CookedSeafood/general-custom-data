@@ -45,7 +45,7 @@ public class CustomCommand {
                     )
                 )
                 .then(
-                    CommandManager.literal("add")
+                    CommandManager.literal("give")
                     .then(
                         CommandManager.argument("entities", EntityArgumentType.entities())
                         .then(

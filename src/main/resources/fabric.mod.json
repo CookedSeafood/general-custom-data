@@ -14,7 +14,8 @@
     ],
     "contact": {
         "homepage": "https://modrinth.com/mod/general-custom-data",
-        "sources": "https://github.com/CookedSeafood/general-custom-data"
+        "sources": "https://github.com/CookedSeafood/general-custom-data",
+        "issues": "https://github.com/CookedSeafood/general-custom-data/issues"
     },
     "license": "GNU-GPL-3.0",
     "icon": "assets/general-custom-data/icon.png",
@@ -43,6 +44,12 @@
         "candy-wrapper": ">=2.0.4"
     },
     "suggests": {},
-    "custom": {},
+    "custom": {
+        "modmenu": {
+            "badges": [
+                "library"
+            ]
+        }
+    },
     "accessWidener": "general-custom-data.classtweaker"
 }
