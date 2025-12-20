@@ -51,7 +51,7 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
 
     @Override
     public NbtCompound getCustomStatusEffects() {
-        return ((LivingEntity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getCompoundOrEmpty("status_effect");
+        return ((LivingEntity)(Object)this).getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt().getCompoundOrEmpty("status_effects");
     }
 
     @Override
@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
                 new NbtCompound(
                     new HashMap<>(
                         Map.<String, NbtElement>of(
-                            "status_effect",
+                            "status_effects",
                             customStatusEffects
                         )
                     )
@@ -105,8 +105,18 @@ public abstract class LivingEntityMixin implements LivingEntityApi {
     }
 
     @Override
+    public boolean addCustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {
+        return this.modifyCustomStatusEffectManager((Function<ServerCustomStatusEffectManager, Boolean>)manager -> manager.add(id, duration, amplifier));
+    }
+
+    @Override
     public boolean setCustomStatusEffect(CustomStatusEffect statusEffect) {
         return this.modifyCustomStatusEffectManager((Function<ServerCustomStatusEffectManager, Boolean>)statusEffect::setTo);
+    }
+
+    @Override
+    public boolean setCustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {
+        return this.modifyCustomStatusEffectManager((Function<ServerCustomStatusEffectManager, Boolean>)manager -> manager.set(id, duration, amplifier));
     }
 
     @Override

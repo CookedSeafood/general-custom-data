@@ -36,7 +36,15 @@ public interface LivingEntityApi {
         return false;
     }
 
+    default boolean addCustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {
+        return false;
+    }
+
     default boolean setCustomStatusEffect(CustomStatusEffect statusEffect) {
+        return false;
+    }
+
+    default boolean setCustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {
         return false;
     }
 

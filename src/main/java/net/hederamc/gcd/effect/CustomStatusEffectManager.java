@@ -30,7 +30,7 @@ public class CustomStatusEffectManager {
 
     /**
      * Get the highest amplifier of the presented status effects with the id.
-     * 
+     *
      * @param id
      * @return {@code -1} if there is no status effect with the id
      */
@@ -46,7 +46,7 @@ public class CustomStatusEffectManager {
 
     /**
      * Get the duration of the presented status effects with the id and the highest amplifier.
-     * 
+     *
      * @param id
      * @return {@code -1} if there is no status effect with the id
      */
@@ -61,13 +61,21 @@ public class CustomStatusEffectManager {
     }
 
     public boolean add(CustomStatusEffect statusEffect) {
-        return this.getOrPut(statusEffect.getId()).add(statusEffect);
+        return this.add(statusEffect.getId(), statusEffect.getDuration(), statusEffect.getAmplifier());
+    }
+
+    public boolean add(CustomStatusEffectIdentifier id, int duration, int amplifier) {
+        return this.getOrPut(id).add(new CustomStatusEffectEpisode(duration, amplifier));
     }
 
     public boolean set(CustomStatusEffect statusEffect) {
-        CustomStatusEffectPlaylist playlist = this.getOrPut(statusEffect.getId());
+        return this.set(statusEffect.getId(), statusEffect.getDuration(), statusEffect.getAmplifier());
+    }
+
+    public boolean set(CustomStatusEffectIdentifier id, int duration, int amplifier) {
+        CustomStatusEffectPlaylist playlist = this.getOrPut(id);
         playlist.clear();
-        return playlist.add(statusEffect);
+        return playlist.add(new CustomStatusEffectEpisode(duration, amplifier));
     }
 
     public void tick() {
@@ -169,9 +177,9 @@ public class CustomStatusEffectManager {
 
     /**
      * A shadow copy.
-     * 
+     *
      * @return a new CustomStatusEffectManager
-     * 
+     *
      * @see #deepCopy()
      */
     public CustomStatusEffectManager copy() {
@@ -180,9 +188,9 @@ public class CustomStatusEffectManager {
 
     /**
      * A deep copy.
-     * 
+     *
      * @return a new CustomStatusEffectManager
-     * 
+     *
      * @see #copy()
      */
     public CustomStatusEffectManager deepCopy() {
@@ -200,7 +208,10 @@ public class CustomStatusEffectManager {
         return new CustomStatusEffectManager(
             nbtCompound.entrySet().stream()
                 .map(entry -> Map.entry(
-                    Registries.get(CustomStatusEffectIdentifier.class, Identifier.of(entry.getKey())),
+                    Registries.get(
+                        CustomStatusEffectIdentifier.class,
+                        Identifier.of(entry.getKey())
+                    ),
                     CustomStatusEffectPlaylist.fromNbt((NbtList)entry.getValue())
                 ))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue))
@@ -213,6 +224,10 @@ public class CustomStatusEffectManager {
                 entry.getKey().getId().toString(),
                 entry.getValue().toNbt()
             ))
-        .<NbtCompound>collect(NbtCompound::new, (nbtCompound, entry) -> nbtCompound.put(entry.getKey(), entry.getValue()), (left, right) -> left.putAll(right));
+        .<NbtCompound>collect(
+            NbtCompound::new,
+            (nbtCompound, entry) -> nbtCompound.put(entry.getKey(), entry.getValue()),
+            (left, right) -> left.putAll(right)
+        );
     }
 }

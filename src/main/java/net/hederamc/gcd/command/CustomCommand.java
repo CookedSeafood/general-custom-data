@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import net.hederamc.gr.registry.Registries;
-import net.hederamc.gcd.effect.CustomStatusEffect;
 import net.hederamc.gcd.effect.CustomStatusEffectIdentifier;
+import net.hederamc.gcd.effect.CustomStatusEffectPlaylist;
 import net.hederamc.gcd.effect.ServerCustomStatusEffectManager;
 import net.hederamc.gcd.suggestion.CustomStatusEffectSuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
@@ -29,6 +29,8 @@ import net.minecraft.util.Identifier;
 public class CustomCommand {
     private static final SimpleCommandExceptionType UNREGISTED_EFFECT_EXCEPTION =
         new SimpleCommandExceptionType(Text.literal("The effect is not registed."));
+    private static final SimpleCommandExceptionType REQUIRES_LIVING_ENTITY_EXCEPTION =
+        new SimpleCommandExceptionType(Text.literal("A living entity is required to run this command here"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         dispatcher.register(
@@ -100,25 +102,28 @@ public class CustomCommand {
         return executeListEffect(source, source.getEntityOrThrow());
     }
 
-    public static int executeListEffect(ServerCommandSource source, Entity target) {
+    public static int executeListEffect(ServerCommandSource source, Entity target) throws CommandSyntaxException {
         if (!(target instanceof LivingEntity)) {
-            return 0;
+            throw REQUIRES_LIVING_ENTITY_EXCEPTION.create();
         }
 
         ServerCustomStatusEffectManager manager = ((LivingEntity)target).getCustomStatusEffectManager();
 
         if (manager.isEmpty()) {
             source.sendFeedback(() -> Text.literal("The target does not have any custom status effect."), false);
+            return 0;
         }
 
         MutableText feedback = MutableText.of(PlainTextContent.EMPTY);
         feedback.append(Text.literal("The target has " + manager.size() + " status effects:"));
 
-        ((LivingEntity)target).getCustomStatusEffectManager().values().forEach(playlist -> {
-            feedback.append(Text.literal("\n" + playlist.getId().getId().toString()).formatted(Formatting.YELLOW));
+        manager.entrySet().forEach(entry -> {
+            CustomStatusEffectIdentifier id = entry.getKey();
+            CustomStatusEffectPlaylist playlist = entry.getValue();
+            feedback.append(Text.literal("\n" + id.getId().toString()).formatted(Formatting.YELLOW));
             feedback.append(Text.literal(" " + playlist.getActiveDuration()).formatted(Formatting.GREEN));
             feedback.append(Text.literal(" " + playlist.getActiveAmplifier()).formatted(Formatting.LIGHT_PURPLE));
-            feedback.append(Text.literal(" " + playlist.getId().getColor()).formatted(Formatting.GRAY));
+            feedback.append(Text.literal(" " + id.getColor()).formatted(Formatting.GRAY));
         });
 
         source.sendFeedback(() -> feedback, false);
@@ -134,7 +139,11 @@ public class CustomCommand {
     }
 
     public static int executeGiveEffect(ServerCommandSource source, Collection<? extends Entity> targets, String effect, int duration, int amplifier) throws CommandSyntaxException {
-        CustomStatusEffectIdentifier effectId = Registries.get(CustomStatusEffectIdentifier.class, Identifier.of(effect.replace('.', ':')));
+        CustomStatusEffectIdentifier effectId = Registries.get(
+            CustomStatusEffectIdentifier.class,
+            Identifier.of(effect.replace('.', ':'))
+        );
+
         if (effectId == null) {
             UNREGISTED_EFFECT_EXCEPTION.create();
         }
@@ -148,10 +157,11 @@ public class CustomCommand {
                 continue;
             }
 
-            ((LivingEntity)target).addCustomStatusEffect(new CustomStatusEffect(effectId, duration, amplifier));
+            ((LivingEntity)target).addCustomStatusEffect(effectId, duration, amplifier);
         }
 
         int count = targets.size();
+
         if (count == 1) {
             source.sendFeedback(() -> Text.literal("Applied effect " + effectId.getName() + " to ").append(targets.iterator().next().getDisplayName()).append("."), true);
         } else {
@@ -183,6 +193,7 @@ public class CustomCommand {
         }
 
         int count = targets.size();
+
         if (count == 1) {
             source.sendFeedback(() -> Text.literal("Removed every effect from ").append(targets.iterator().next().getDisplayName()).append("."), true);
         } else {
@@ -193,7 +204,11 @@ public class CustomCommand {
     }
 
     public static int executeClearEffect(ServerCommandSource source, Collection<? extends Entity> targets, String effect) {
-        CustomStatusEffectIdentifier effectId = Registries.get(CustomStatusEffectIdentifier.class, Identifier.of(effect.replace('.', ':')));
+        CustomStatusEffectIdentifier effectId = Registries.get(
+            CustomStatusEffectIdentifier.class,
+            Identifier.of(effect.replace('.', ':'))
+        );
+
         if (effectId == null) {
             UNREGISTED_EFFECT_EXCEPTION.create();
         }
@@ -211,6 +226,7 @@ public class CustomCommand {
         }
 
         int count = targets.size();
+
         if (count == 1) {
             source.sendFeedback(() -> Text.literal("Removed effect " + effectId.getName() + " from ").append(targets.iterator().next().getDisplayName()).append("."), true);
         } else {

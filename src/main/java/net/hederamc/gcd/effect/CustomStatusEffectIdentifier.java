@@ -77,9 +77,9 @@ public class CustomStatusEffectIdentifier {
 
     /**
      * A shadow copy.
-     * 
+     *
      * @return a new ManaStatusEffectIdentifier
-     * 
+     *
      * @see #deepCopy()
      */
     public CustomStatusEffectIdentifier copy() {
@@ -88,9 +88,9 @@ public class CustomStatusEffectIdentifier {
 
     /**
      * A deep copy.
-     * 
+     *
      * @return a new ManaStatusEffectIdentifier
-     * 
+     *
      * @see #copy()
      */
     public CustomStatusEffectIdentifier deepCopy() {

@@ -14,13 +14,13 @@ import net.minecraft.nbt.NbtList;
 
 /**
  * Tickable single-id auto-ordering status effect container.
- * 
- * @see #add(CustomStatusEffect)
+ *
+ * @see #add(CustomStatusEffectEpisode)
  */
 public class CustomStatusEffectPlaylist {
-    private final List<CustomStatusEffect> playlist;
+    private final List<CustomStatusEffectEpisode> playlist;
 
-    public CustomStatusEffectPlaylist(List<CustomStatusEffect> playlist) {
+    public CustomStatusEffectPlaylist(List<CustomStatusEffectEpisode> playlist) {
         this.playlist = playlist;
     }
 
@@ -28,18 +28,8 @@ public class CustomStatusEffectPlaylist {
         this.playlist = new ArrayList<>();
     }
 
-    public CustomStatusEffectIdentifier getId() {
-        CustomStatusEffect statusEffect = this.get(0);
-
-        if (statusEffect == null) {
-            return null;
-        }
-
-        return statusEffect.getId();
-    }
-
     public int getActiveAmplifier() {
-        CustomStatusEffect statusEffect = this.get(0);
+        CustomStatusEffectEpisode statusEffect = this.get(0);
 
         if (statusEffect == null) {
             return -1;
@@ -49,7 +39,7 @@ public class CustomStatusEffectPlaylist {
     }
 
     public int getActiveDuration() {
-        CustomStatusEffect statusEffect = this.get(0);
+        CustomStatusEffectEpisode statusEffect = this.get(0);
 
         if (statusEffect == null) {
             return -1;
@@ -59,10 +49,10 @@ public class CustomStatusEffectPlaylist {
     }
 
     public void tick() {
-        Iterator<CustomStatusEffect> iterator = this.iterator();
+        Iterator<CustomStatusEffectEpisode> iterator = this.iterator();
 
         while (iterator.hasNext()) {
-            CustomStatusEffect statusEffect = iterator.next();
+            CustomStatusEffectEpisode statusEffect = iterator.next();
 
             if (statusEffect.getDuration() == 0) {
                 iterator.remove();
@@ -73,7 +63,7 @@ public class CustomStatusEffectPlaylist {
         }
     }
 
-    public List<CustomStatusEffect> getPlaylist() {
+    public List<CustomStatusEffectEpisode> getPlaylist() {
         return this.playlist;
     }
 
@@ -85,25 +75,25 @@ public class CustomStatusEffectPlaylist {
         return this.playlist.isEmpty();
     }
 
-    public boolean contains(CustomStatusEffect statusEffect) {
+    public boolean contains(CustomStatusEffectEpisode statusEffect) {
         return this.playlist.contains(statusEffect);
     }
 
-    public boolean containsAll(Collection<CustomStatusEffect> statusEffects) {
+    public boolean containsAll(Collection<CustomStatusEffectEpisode> statusEffects) {
         return this.playlist.containsAll(statusEffects);
     }
 
-    public CustomStatusEffect get(int index) {
+    public CustomStatusEffectEpisode get(int index) {
         return this.playlist.get(index);
     }
 
     /**
      * Add the status effect in descending order of amplifier.
-     * 
+     *
      * @param statusEffect
      * @return {@code true}
      */
-    public boolean add(CustomStatusEffect statusEffect) {
+    public boolean add(CustomStatusEffectEpisode statusEffect) {
         int amplifier = statusEffect.getAmplifier();
         int size = this.size();
 
@@ -117,34 +107,34 @@ public class CustomStatusEffectPlaylist {
         return this.playlist.add(statusEffect);
     }
 
-    public void add(int i, CustomStatusEffect statusEffect) {
+    public void add(int i, CustomStatusEffectEpisode statusEffect) {
         this.playlist.add(i, statusEffect);
     }
 
     /**
      * Add every status effect in descending order of amplifier.
-     * 
+     *
      * @param statusEffect
      * @return {@code true}
      */
-    public boolean addAll(Collection<CustomStatusEffect> statusEffects) {
+    public boolean addAll(Collection<CustomStatusEffectEpisode> statusEffects) {
         statusEffects.forEach(this::add);
         return true;
     }
 
-    public boolean addAll(int i, Collection<CustomStatusEffect> statusEffects) {
+    public boolean addAll(int i, Collection<CustomStatusEffectEpisode> statusEffects) {
         return this.playlist.addAll(i, statusEffects);
     }
 
-    public boolean remove(CustomStatusEffect statusEffect) {
+    public boolean remove(CustomStatusEffectEpisode statusEffect) {
         return this.playlist.remove(statusEffect);
     }
 
-    public boolean removeAll(Collection<CustomStatusEffect> statusEffects) {
+    public boolean removeAll(Collection<CustomStatusEffectEpisode> statusEffects) {
         return this.playlist.removeAll(statusEffects);
     }
 
-    public boolean removeIf(Predicate<? super CustomStatusEffect> filter) {
+    public boolean removeIf(Predicate<? super CustomStatusEffectEpisode> filter) {
         return this.playlist.removeIf(filter);
     }
 
@@ -152,27 +142,27 @@ public class CustomStatusEffectPlaylist {
         this.playlist.clear();
     }
 
-    public void forEach(Consumer<? super CustomStatusEffect> action) {
+    public void forEach(Consumer<? super CustomStatusEffectEpisode> action) {
         this.playlist.forEach(action);
     }
 
-    public Iterator<CustomStatusEffect> iterator() {
+    public Iterator<CustomStatusEffectEpisode> iterator() {
         return this.playlist.iterator();
     }
 
-    public Stream<CustomStatusEffect> stream() {
+    public Stream<CustomStatusEffectEpisode> stream() {
         return this.playlist.stream();
     }
 
-    public void sort(Comparator<? super CustomStatusEffect> c) {
+    public void sort(Comparator<? super CustomStatusEffectEpisode> c) {
         this.playlist.sort(c);
     }
 
     /**
      * A shadow copy.
-     * 
+     *
      * @return a new CustomStatusEffectPlaylist
-     * 
+     *
      * @see #deepCopy()
      */
     public CustomStatusEffectPlaylist copy() {
@@ -181,15 +171,15 @@ public class CustomStatusEffectPlaylist {
 
     /**
      * A deep copy.
-     * 
+     *
      * @return a new CustomStatusEffectPlaylist
-     * 
+     *
      * @see #copy()
      */
     public CustomStatusEffectPlaylist deepCopy() {
         return new CustomStatusEffectPlaylist(
             this.stream()
-                .map(CustomStatusEffect::deepCopy)
+                .map(CustomStatusEffectEpisode::deepCopy)
                 .collect(Collectors.toList())
         );
     }
@@ -198,14 +188,14 @@ public class CustomStatusEffectPlaylist {
         return new CustomStatusEffectPlaylist(
             nbtList.stream()
                 .map(NbtCompound.class::cast)
-                .map(CustomStatusEffect::fromNbt)
+                .map(CustomStatusEffectEpisode::fromNbt)
                 .collect(Collectors.toList())
         );
     }
 
     public NbtList toNbt() {
         return this.stream()
-            .map(CustomStatusEffect::toNbt)
+            .map(CustomStatusEffectEpisode::toNbt)
             .collect(NbtList::new, NbtList::add, NbtList::addAll);
     }
 }

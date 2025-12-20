@@ -2,15 +2,20 @@ package net.hederamc.gcd.effect;
 
 import java.util.HashMap;
 import java.util.Map;
+import net.hederamc.gr.registry.Registries;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.util.Identifier;
 
 /**
- * Tickable status effect.
+ * Non-tickable status effect.
  */
 public class CustomStatusEffect {
-    public static final int AMPLIFIER_LIMIT = 255;
+    public static final int INFINITE = -1;
+	public static final int MIN_AMPLIFIER = 0;
+	public static final int MAX_AMPLIFIER = 255;
     private CustomStatusEffectIdentifier id;
     private int duration;
     private int amplifier;
@@ -18,15 +23,7 @@ public class CustomStatusEffect {
     public CustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {
         this.id = id;
         this.duration = duration;
-        this.amplifier = Math.clamp(amplifier, 0, AMPLIFIER_LIMIT);
-    }
-
-    public static CustomStatusEffect of(CustomStatusEffectIdentifier id) {
-        return new CustomStatusEffect(id, 0, 0);
-    }
-
-    public boolean addTo(CustomStatusEffectPlaylist playlist) {
-        return playlist.add(this);
+        this.amplifier = Math.clamp(amplifier, MIN_AMPLIFIER, MAX_AMPLIFIER);
     }
 
     public boolean addTo(CustomStatusEffectManager manager) {
@@ -35,10 +32,6 @@ public class CustomStatusEffect {
 
     public boolean setTo(CustomStatusEffectManager manager) {
         return manager.set(this);
-    }
-
-    public void tick() {
-        --this.duration;
     }
 
     public CustomStatusEffectIdentifier getId() {
@@ -81,7 +74,7 @@ public class CustomStatusEffect {
     }
 
     public void setAmplifier(int amplifier) {
-        this.amplifier = Math.clamp(amplifier, 0, AMPLIFIER_LIMIT);
+        this.amplifier = Math.clamp(amplifier, MIN_AMPLIFIER, MAX_AMPLIFIER);
     }
 
     public int incrementAmplifier() {
@@ -100,9 +93,9 @@ public class CustomStatusEffect {
 
     /**
      * A shadow copy.
-     * 
+     *
      * @return a new CustomStatusEffect
-     * 
+     *
      * @see #deepCopy()
      */
     public CustomStatusEffect copy() {
@@ -111,9 +104,9 @@ public class CustomStatusEffect {
 
     /**
      * A deep copy.
-     * 
+     *
      * @return a new CustomStatusEffect
-     * 
+     *
      * @see #copy()
      */
     public CustomStatusEffect deepCopy() {
@@ -122,7 +115,10 @@ public class CustomStatusEffect {
 
     public static CustomStatusEffect fromNbt(NbtCompound nbtCompound) {
         return new CustomStatusEffect(
-            CustomStatusEffectIdentifier.fromNbt(nbtCompound.getCompoundOrEmpty("id")),
+            Registries.get(
+                CustomStatusEffectIdentifier.class,
+                Identifier.of(nbtCompound.getString("id", ""))
+            ),
             nbtCompound.getInt("duration", 0),
             nbtCompound.getInt("amplifier", 0)
         );
@@ -133,7 +129,7 @@ public class CustomStatusEffect {
             new HashMap<>(
                 Map.<String, NbtElement>of(
                     "id",
-                    this.id.toNbt(),
+                    NbtString.of(this.id.getId().toString()),
                     "duration",
                     NbtInt.of(this.duration),
                     "amplifier",
