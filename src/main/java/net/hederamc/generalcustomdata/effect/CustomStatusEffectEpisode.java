@@ -1,21 +1,36 @@
-package net.hederamc.gcd.effect;
+package net.hederamc.generalcustomdata.effect;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtInt;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.Tag;
 
 /**
- * Tickable status effect.
+ * Tickable status effect episode.
  */
 public class CustomStatusEffectEpisode {
+    public static final int INFINITE = -1;
+    public static final int MIN_AMPLIFIER = 0;
+    public static final int MAX_AMPLIFIER = 255;
     private int duration;
     private int amplifier;
 
     public CustomStatusEffectEpisode(int duration, int amplifier) {
         this.duration = duration;
-        this.amplifier = Math.clamp(amplifier, CustomStatusEffect.MIN_AMPLIFIER, CustomStatusEffect.MAX_AMPLIFIER);
+        this.amplifier = Math.clamp(amplifier, MIN_AMPLIFIER, MAX_AMPLIFIER);
+    }
+
+    public CustomStatusEffectEpisode(CustomStatusEffectEpisode episode) {
+        this(episode.duration, episode.amplifier);
+    }
+
+    public CustomStatusEffectEpisode() {
+        this(0, 0);
+    }
+
+    public static CustomStatusEffectEpisode of(int duration, int amplifier) {
+        return new CustomStatusEffectEpisode(duration, amplifier);
     }
 
     public void tick() {
@@ -49,7 +64,7 @@ public class CustomStatusEffectEpisode {
     }
 
     public void setAmplifier(int amplifier) {
-        this.amplifier = Math.clamp(amplifier, CustomStatusEffect.MIN_AMPLIFIER, CustomStatusEffect.MAX_AMPLIFIER);
+        this.amplifier = Math.clamp(amplifier, MIN_AMPLIFIER, MAX_AMPLIFIER);
     }
 
     public int incrementAmplifier() {
@@ -66,21 +81,33 @@ public class CustomStatusEffectEpisode {
         return this;
     }
 
+    public boolean equals(CustomStatusEffectEpisode episode) {
+        return this.duration == episode.duration && this.amplifier == episode.amplifier;
+    }
+
+    public int hashCode() {
+        return Integer.hashCode(this.duration) * 31 + Integer.hashCode(this.amplifier);
+    }
+
+    public String toString() {
+        return this.duration + " " + this.amplifier;
+    }
+
     /**
      * The same as {@link #deepCopy()}.
      *
-     * @return a new CustomStatusEffect
+     * @return a new CustomStatusEffectEpisode
      *
      * @see #deepCopy()
      */
     public CustomStatusEffectEpisode copy() {
-        return this.deepCopy();
+        return new CustomStatusEffectEpisode(this);
     }
 
     /**
      * A deep copy.
      *
-     * @return a new CustomStatusEffect
+     * @return a new CustomStatusEffectEpisode
      *
      * @see #copy()
      */
@@ -88,21 +115,21 @@ public class CustomStatusEffectEpisode {
         return new CustomStatusEffectEpisode(this.duration, this.amplifier);
     }
 
-    public static CustomStatusEffectEpisode fromNbt(NbtCompound nbtCompound) {
+    public static CustomStatusEffectEpisode fromNbt(CompoundTag nbtCompound) {
         return new CustomStatusEffectEpisode(
-            nbtCompound.getInt("duration", 0),
-            nbtCompound.getInt("amplifier", 0)
+            nbtCompound.getIntOr("duration", 0),
+            nbtCompound.getIntOr("amplifier", 0)
         );
     }
 
-    public NbtCompound toNbt() {
-        return new NbtCompound(
+    public CompoundTag toNbt() {
+        return new CompoundTag(
             new HashMap<>(
-                Map.<String, NbtElement>of(
+                Map.<String, Tag>of(
                     "duration",
-                    NbtInt.of(this.duration),
+                    IntTag.valueOf(this.duration),
                     "amplifier",
-                    NbtInt.of(this.amplifier)
+                    IntTag.valueOf(this.amplifier)
                 )
             )
         );

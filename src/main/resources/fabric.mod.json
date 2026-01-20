@@ -22,10 +22,10 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "net.hederamc.gcd.GeneralCustomData"
+            "net.hederamc.generalcustomdata.GeneralCustomData"
         ],
         "client": [
-            "net.hederamc.gcd.GeneralCustomDataClient"
+            "net.hederamc.generalcustomdata.GeneralCustomDataClient"
         ]
     },
     "mixins": [
@@ -36,12 +36,12 @@
         }
     ],
     "depends": {
-        "fabricloader": ">=0.18.3",
-        "minecraft": "~1.21.5",
-        "java": ">=21",
+        "fabricloader": ">=0.18.4",
+        "minecraft": "~26.1-",
+        "java": ">=25",
         "fabric-api": "*",
-        "generic-registry": ">=2.0.1",
-        "candy-wrapper": ">=2.0.6"
+        "generic-registry": "~4.0.0-",
+        "fishbone-trehalose": "~4.0.0-"
     },
     "suggests": {},
     "custom": {

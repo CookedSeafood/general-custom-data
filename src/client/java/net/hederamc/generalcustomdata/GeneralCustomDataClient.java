@@ -1,4 +1,4 @@
-package net.hederamc.gcd;
+package net.hederamc.generalcustomdata;
 
 import net.fabricmc.api.ClientModInitializer;
 

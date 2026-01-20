@@ -1,6 +1,6 @@
-package net.hederamc.gcd;
+package net.hederamc.generalcustomdata;
 
-import net.hederamc.gcd.command.CustomCommand;
+import net.hederamc.generalcustomdata.command.CustomCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;

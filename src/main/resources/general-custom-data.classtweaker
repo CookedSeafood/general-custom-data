@@ -1,7 +1,21 @@
-classTweaker v1 named
+classTweaker v1 official
 
-transitive-inject-interface net/minecraft/entity/Entity       net/hederamc/gcd/api/EntityApi
+transitive-inject-interface net/minecraft/world/entity/Entity       net/hederamc/generalcustomdata/api/CustomExplosionRadiusHolder
 
-transitive-inject-interface net/minecraft/entity/LivingEntity net/hederamc/gcd/api/LivingEntityApi
+transitive-inject-interface net/minecraft/world/entity/Entity       net/hederamc/generalcustomdata/api/CustomFuseHolder
 
-transitive-inject-interface net/minecraft/item/ItemStack      net/hederamc/gcd/api/ItemStackApi
+transitive-inject-interface net/minecraft/world/entity/Entity       net/hederamc/generalcustomdata/api/CustomIdHolder
+
+transitive-inject-interface net/minecraft/world/entity/Entity       net/hederamc/generalcustomdata/api/CustomOwnerHolder
+
+transitive-inject-interface net/minecraft/world/item/ItemStack      net/hederamc/generalcustomdata/api/CustomIdHolder
+
+transitive-inject-interface net/minecraft/world/item/ItemStack      net/hederamc/generalcustomdata/api/CustomModifiersHolder
+
+transitive-inject-interface net/minecraft/world/item/ItemStack      net/hederamc/generalcustomdata/api/CustomRarityHolder
+
+transitive-inject-interface net/minecraft/world/item/ItemStack      net/hederamc/generalcustomdata/api/CustomStatusEffectsHolder
+
+transitive-inject-interface net/minecraft/world/entity/LivingEntity net/hederamc/generalcustomdata/api/CustomModifiersHolder
+
+transitive-inject-interface net/minecraft/world/entity/LivingEntity net/hederamc/generalcustomdata/api/CustomStatusEffectsHolder
