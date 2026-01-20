@@ -3,22 +3,17 @@ package net.hederamc.generalcustomdata;
 import net.hederamc.generalcustomdata.command.CustomCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GeneralCustomData implements ModInitializer {
     public static final String MOD_ID = "general-custom-data";
+    public static final String MOD_NAMESPACE = "general_custom_data";
 
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-    public static final byte VERSION_MAJOR = 1;
-    public static final byte VERSION_MINOR = 0;
-    public static final byte VERSION_PATCH = 7;
-
-    public static final String MOD_NAMESPACE = "general_custom_data";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     @Override
     public void onInitialize() {
