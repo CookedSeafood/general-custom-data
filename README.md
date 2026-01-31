@@ -1,6 +1,6 @@
 # General Custom Data
 
-General Custom Data is a vanilla-data alligned custom-data retriever, writer, and ticker.
+General Custom Data is a library adds fields on entities or items to their custom data.
 
 Currently not fully featured.
 

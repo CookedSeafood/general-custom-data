@@ -3,7 +3,7 @@
     "id": "general-custom-data",
     "version": "${version}",
     "name": "General Custom Data",
-    "description": "A vanilla-data alligned custom-data retriever, writer, and ticker.",
+    "description": "Interface injecting API providing data components like fields for custom data.",
     "authors": [
         {
             "name": "CookedSeafood",
