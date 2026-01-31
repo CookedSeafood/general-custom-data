@@ -25,6 +25,10 @@ public abstract class LivingEntityMixin implements CustomModifiersHolder, Custom
         at = @At("TAIL")
     )
     private void tickCustomStatusEffect(CallbackInfo info) {
+        if (((LivingEntity)(Object)this).level().isClientSide()) {
+            return;
+        }
+
         this.tickCustomStatusEffect();
     }
 
