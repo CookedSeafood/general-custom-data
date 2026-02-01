@@ -1,6 +1,6 @@
 # General Custom Data
 
-General Custom Data is a library adds fields on entities or items to their custom data.
+General Custom Data is a library providing data components like functionality for custom data tags.
 
 Currently not fully featured.
 

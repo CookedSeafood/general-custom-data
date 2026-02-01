@@ -3,7 +3,7 @@
     "id": "general-custom-data",
     "version": "${version}",
     "name": "General Custom Data",
-    "description": "Interface injecting API providing data components like fields for custom data.",
+    "description": "Interface injecting API providing data components like functionality for custom data tags.",
     "authors": [
         {
             "name": "CookedSeafood",
