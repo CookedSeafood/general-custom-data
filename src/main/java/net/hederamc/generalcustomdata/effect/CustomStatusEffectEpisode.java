@@ -34,6 +34,10 @@ public class CustomStatusEffectEpisode {
     }
 
     public void tick() {
+        if (this.duration == INFINITE) {
+            return;
+        }
+
         --this.duration;
     }
 

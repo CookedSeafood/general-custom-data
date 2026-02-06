@@ -152,11 +152,14 @@ public class CustomStatusEffectPlaylist {
         for (int i = 0; i < size; ++i) {
             CustomStatusEffectEpisode presented = this.get(i);
             int presentedAmplifier = presented.getAmplifier();
-            int presentedDuration = presented.getDuration();
 
-            if (presentedAmplifier == amplifier && presentedDuration < duration) {
-                presented.setDuration(duration);
-                return true;
+            if (presentedAmplifier == amplifier) {
+                if (presented.getDuration() < duration) {
+                    presented.setDuration(duration);
+                    return true;
+                }
+
+                return false;
             }
 
             if (presentedAmplifier < amplifier) {
