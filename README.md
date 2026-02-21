@@ -25,7 +25,7 @@ Currently not fully featured.
 &ensp;\\- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **status_effects**  
 &emsp;&emsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png) A status effect.  
 &emsp;&emsp;&emsp;&ensp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **id**: `namespace:path`.  
-&emsp;&emsp;&emsp;&ensp;\\- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **episodes**: A playlist. Unordered.  
+&emsp;&emsp;&emsp;&ensp;\\- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **episodes**: Unordered episodes.  
 &emsp;&emsp;&emsp;&emsp;&emsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png) An episode.  
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;|- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/int.png) **amplifier**: Any.  
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;\\- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/int.png) **duration**: Any. In ticks.
@@ -38,87 +38,7 @@ Currently not fully featured.
 &ensp;\\- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **status_effects**  
 &emsp;&emsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png) A status effect.  
 &emsp;&emsp;&emsp;&ensp;|- ![String](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/string.png) **id**: `namespace:path`.  
-&emsp;&emsp;&emsp;&ensp;\\- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **episodes**: A playlist containing episodes which ticking simultaneously. Ordered by amplifier from highest.  
+&emsp;&emsp;&emsp;&ensp;\\- ![List](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/list.png) **episodes**: Episodes are descending ordered by whose amplifier, ticking simultaneously.  
 &emsp;&emsp;&emsp;&emsp;&emsp;\\- ![Compound](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/compound.png) An episode.  
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;|- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/int.png) **amplifier**: Any.  
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;\\- ![Int](https://github.com/CookedSeafood/nbtsheet/raw/0cfc19cc5644a82c921d39f9c40729aca3dea33d/int.png) **duration**: Any. In ticks.
-
-## Method
-
-```java
-public final class ItemStack{
-    public Identifier getCustomId() {}
-
-    public void setCustomId(Identifier id) {}
-
-    public Identifier getCustomIdOrId() {}
-
-    public String getCustomRarity() {}
-
-    public void setCustomRarity(String rarity) {}
-
-    public String getCustomRarityOrRarity() {}
-
-    public NbtList getCustomModifiers() {}
-
-    public NbtList getCustomStatusEffects() {}
-}
-```
-
-```java
-public abstract class Entity{
-    public Identifier getCustomId() {}
-
-    public void setCustomId(Identifier id) {}
-
-    public Identifier getCustomIdOrId() {}
-
-    public Entity getCustomOwner() {}
-
-    public void setCustomOwner(Entity owner) {}
-
-    public short getCustomFuse() {}
-
-    public void setCustomFuse(short fuse) {}
-
-    public byte getCustomExplosionRadius() {}
-
-    public void setCustomExplosionRadius(byte radius) {}
-}
-```
-
-```java
-public abstract class LivingEntity{
-    public NbtCompound getCustomStatusEffects() {}
-
-    public void setCustomStatusEffects(NbtCompound customStatusEffects) {}
-
-    public CustomStatusEffectManager getCustomStatusEffectManager() {}
-
-    public boolean hasCustomStatusEffect(CustomStatusEffectIdentifier id) {}
-
-    public <T> T modifyCustomStatusEffectManager(Function<CustomStatusEffectManager, T> action) {}
-
-    public void modifyCustomStatusEffectManager(Consumer<CustomStatusEffectManager> action) {}
-
-    public boolean addCustomStatusEffect(CustomStatusEffect statusEffect) {}
-
-    public boolean addCustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {}
-
-    public boolean setCustomStatusEffect(CustomStatusEffect statusEffect) {}
-
-    public boolean setCustomStatusEffect(CustomStatusEffectIdentifier id, int duration, int amplifier) {}
-
-    public CustomStatusEffectPlaylist removeCustomStatusEffect(CustomStatusEffectIdentifier id) {}
-
-    public void clearCustomStatusEffect() {}
-
-    public void tickCustomStatusEffect() {}
-
-    public double getCustomModifiedValue(String attribute, double base) {}
-
-    public NbtList getCustomModifiers(String attribute) {}
-
-    public NbtList getCustomModifiers() {}
-}
-```

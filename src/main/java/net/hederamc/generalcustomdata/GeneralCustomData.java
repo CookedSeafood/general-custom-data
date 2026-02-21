@@ -1,8 +1,12 @@
 package net.hederamc.generalcustomdata;
 
 import net.hederamc.generalcustomdata.command.CustomCommand;
+import net.hederamc.generalcustomdata.network.protocol.common.GeneralCustomDataConnectionInitializerC2SPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +25,15 @@ public class GeneralCustomData implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
+        PayloadTypeRegistry.serverboundPlay().register(GeneralCustomDataConnectionInitializerC2SPayload.ID, GeneralCustomDataConnectionInitializerC2SPayload.STREAM_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(GeneralCustomDataConnectionInitializerC2SPayload.ID, (payload, context) -> {
+            ServerPlayer player = context.player();
+            if (player == null) {
+                return;
+            }
+
+            player.connection.setCanConnectGeneralCustomData(true);
+        });
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> CustomCommand.register(dispatcher, registryAccess));
     }
 }

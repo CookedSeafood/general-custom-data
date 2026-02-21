@@ -1,5 +1,6 @@
 package net.hederamc.generalcustomdata.effect;
 
+import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,14 +17,33 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.network.codec.StreamCodec;
+import org.jspecify.annotations.Nullable;
 
 /**
- * Tickable auto-ordering status effect episode container.
+ * The episodes in this playlist are descending ordered by whose amplifier.
  *
  * @see #add(CustomStatusEffectEpisode)
  */
 public class CustomStatusEffectPlaylist {
+    public static final StreamCodec<ByteBuf, CustomStatusEffectPlaylist> STREAM_CODEC = new StreamCodec<>() {
+        @Override
+        public CustomStatusEffectPlaylist decode(ByteBuf input) {
+            int count = input.readableBytes() / CustomStatusEffectEpisode.SIZE_IN_BYTES;
+            List<CustomStatusEffectEpisode> episodes = new ArrayList<>(count);
+
+            for (int i = 0; i < count; i++) {
+                episodes.add(CustomStatusEffectEpisode.STREAM_CODEC.decode(input));
+            }
+
+            return new CustomStatusEffectPlaylist(episodes);
+        }
+
+        @Override
+        public void encode(ByteBuf output, CustomStatusEffectPlaylist value) {
+            value.forEach(episode -> CustomStatusEffectEpisode.STREAM_CODEC.encode(output, episode));
+        }
+    };
     private final List<CustomStatusEffectEpisode> episodes;
 
     public CustomStatusEffectPlaylist(List<CustomStatusEffectEpisode> episodes) {
@@ -45,6 +65,11 @@ public class CustomStatusEffectPlaylist {
 
     public CustomStatusEffectPlaylist withAll(Collection<CustomStatusEffectEpisode> c) {
         c.forEach(this::with);
+        return this;
+    }
+
+    public CustomStatusEffectPlaylist withAll(CustomStatusEffectPlaylist playlist) {
+        this.withAll(playlist.episodes);
         return this;
     }
 
@@ -85,12 +110,8 @@ public class CustomStatusEffectPlaylist {
         return this.get(0);
     }
 
-    public boolean addFrom(CustomStatusEffectPlaylist playlist) {
-        return this.addAll(playlist.episodes);
-    }
-
-    public boolean addTo(CustomStatusEffectPlaylist playlist) {
-        return playlist.addFrom(this);
+    public boolean addAllTo(CustomStatusEffectPlaylist playlist) {
+        return playlist.addAll(this);
     }
 
     public Set<Integer> amplifierSet() {
@@ -139,10 +160,17 @@ public class CustomStatusEffectPlaylist {
     }
 
     /**
-     * Add the status effect in descending order of amplifier.
+     * Inserts the specified episode after the episode with the
+     * smallest amplifier biger than the specified episode's if this
+     * playlist has no episode with the same amplifier with the
+     * specified episode's, or merges the specified episode with the
+     * episode with the same amplifier if the duration of such
+     * episode is smaller than the specified episode's, otherwise do
+     * nothing.
      *
-     * @param episode
-     * @return {@code true}
+     * @param episode episode to be inserted or merged
+     * @return {@code true} if the specified episode is inserted or
+     *         merged
      */
     public boolean add(CustomStatusEffectEpisode episode) {
         int amplifier = episode.getAmplifier();
@@ -179,23 +207,29 @@ public class CustomStatusEffectPlaylist {
         return this.episodes.containsAll(c);
     }
 
-    /**
-     * Add every status effect in descending order of amplifier.
-     *
-     * @param episode
-     * @return {@code true}
-     */
     public boolean addAll(Collection<CustomStatusEffectEpisode> c) {
         c.forEach(this::add);
         return true;
+    }
+
+    public boolean addAll(CustomStatusEffectPlaylist playlist) {
+        return this.addAll(playlist.episodes);
     }
 
     public boolean addAll(int index, Collection<CustomStatusEffectEpisode> c) {
         return this.episodes.addAll(index, c);
     }
 
+    public boolean addAll(int index, CustomStatusEffectPlaylist playlist) {
+        return this.addAll(index, playlist.episodes);
+    }
+
     public boolean removeAll(Collection<CustomStatusEffectEpisode> c) {
         return this.episodes.removeAll(c);
+    }
+
+    public boolean removeAll(CustomStatusEffectPlaylist playlist) {
+        return this.removeAll(playlist.episodes);
     }
 
     public boolean removeIf(Predicate<? super CustomStatusEffectEpisode> filter) {
@@ -204,6 +238,10 @@ public class CustomStatusEffectPlaylist {
 
     public boolean retainAll(Collection<CustomStatusEffectEpisode> c) {
         return this.episodes.retainAll(c);
+    }
+
+    public boolean retainAll(CustomStatusEffectPlaylist playlist) {
+        return this.retainAll(playlist.episodes);
     }
 
     public void replaceAll(UnaryOperator<CustomStatusEffectEpisode> operator) {

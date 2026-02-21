@@ -1,15 +1,22 @@
 package net.hederamc.generalcustomdata.effect;
 
+import io.netty.buffer.ByteBuf;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
-/**
- * Tickable status effect episode.
- */
 public class CustomStatusEffectEpisode {
+    public static final StreamCodec<ByteBuf, CustomStatusEffectEpisode> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT,
+            CustomStatusEffectEpisode::getDuration,
+            ByteBufCodecs.INT,
+            CustomStatusEffectEpisode::getAmplifier,
+            CustomStatusEffectEpisode::new);
+    public static final int SIZE_IN_BYTES = 8;
     public static final int INFINITE = -1;
     public static final int MIN_AMPLIFIER = 0;
     public static final int MAX_AMPLIFIER = 255;

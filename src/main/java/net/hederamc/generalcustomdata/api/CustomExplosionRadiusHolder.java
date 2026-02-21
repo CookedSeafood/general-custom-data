@@ -1,11 +1,18 @@
 package net.hederamc.generalcustomdata.api;
 
-public interface CustomExplosionRadiusHolder {
+import net.hederamc.fishbonetrehalose.api.CustomDataHolder;
+import net.minecraft.nbt.ByteTag;
+
+public interface CustomExplosionRadiusHolder extends CustomDataHolder {
     default byte getCustomExplosionRadius() {
-        throw new UnsupportedOperationException();
+        return this.getCustomDataOrEmpty().tag().getByteOr("explosion_radius", (byte)0);
     }
 
     default void setCustomExplosionRadius(byte radius) {
-        throw new UnsupportedOperationException();
+        this.getOrCreateCustomData().tag().putByte("explosion_radius", radius);
+    }
+
+    default ByteTag removeCustomExplosionRadius() {
+        return (ByteTag)this.getCustomDataOrEmpty().tag().remove("explosion_radius");
     }
 }

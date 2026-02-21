@@ -12,11 +12,8 @@ import java.util.stream.Stream;
 import net.hederamc.generalcustomdata.api.CustomStatusEffectsHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
-/**
- * Tickable status effect container.
- */
 public class CustomStatusEffectManager {
     protected final Set<CustomStatusEffect> statusEffects;
 
@@ -73,6 +70,22 @@ public class CustomStatusEffectManager {
             .anyMatch(id::isIdOf);
     }
 
+    /**
+     * Returns the effect of which the specific id is the id, or
+     * {@code null} if this manager has no such effect.
+     *
+     * <p>More formally, if this manager has an effect with an id
+     * {@code i} such that {@code Objects.equals(id, i)},
+     * then this method returns the effect; otherwise it
+     * returns {@code null}.  (There can be at most one such effect.)
+     *
+     * <p>The returned effect will not be ticked, nor be backed up by
+     * any storage.
+     *
+     * @param id the id whose associated effect is to be returned
+     * @return the effect of which the specific id is the id, or
+     *         {@code null} if this manager has no such effect
+     */
     @Nullable
     public CustomStatusEffect get(CustomStatusEffectIdentifier id) {
         return this.parallelStream()
@@ -106,12 +119,13 @@ public class CustomStatusEffectManager {
         return true;
     }
 
-    public boolean addFrom(CustomStatusEffectManager manager) {
-        return this.addAll(manager.statusEffects);
+    public boolean setAll(CustomStatusEffectManager manager) {
+        this.setAll(manager.statusEffects);
+        return true;
     }
 
-    public boolean addTo(CustomStatusEffectManager manager) {
-        return manager.addFrom(this);
+    public boolean addAllTo(CustomStatusEffectManager manager) {
+        return manager.addAll(this);
     }
 
     public Set<CustomStatusEffectIdentifier> idSet() {
@@ -165,7 +179,7 @@ public class CustomStatusEffectManager {
             return this.statusEffects.add(statusEffect);
         }
 
-        return presented.addFrom(statusEffect);
+        return presented.merge(statusEffect);
     }
 
     public boolean remove(CustomStatusEffect statusEffect) {
@@ -181,8 +195,16 @@ public class CustomStatusEffectManager {
         return true;
     }
 
+    public boolean addAll(CustomStatusEffectManager manager) {
+        return this.addAll(manager.statusEffects);
+    }
+
     public boolean removeAll(Collection<CustomStatusEffect> c) {
         return this.statusEffects.removeAll(c);
+    }
+
+    public boolean removeAll(CustomStatusEffectManager manager) {
+        return this.removeAll(manager.statusEffects);
     }
 
     public boolean removeIf(Predicate<? super CustomStatusEffect> filter) {
@@ -191,6 +213,10 @@ public class CustomStatusEffectManager {
 
     public boolean retainAll(Collection<CustomStatusEffect> c) {
         return this.statusEffects.retainAll(c);
+    }
+
+    public boolean retainAll(CustomStatusEffectManager manager) {
+        return this.retainAll(manager.statusEffects);
     }
 
     public void clear() {

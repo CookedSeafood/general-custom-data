@@ -1,16 +1,21 @@
 package net.hederamc.generalcustomdata.effect;
 
+import io.netty.buffer.ByteBuf;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
-/**
- * Tickable status effect.
- */
 public class CustomStatusEffect {
+    public static final StreamCodec<ByteBuf, CustomStatusEffect> STREAM_CODEC = StreamCodec.composite(
+            CustomStatusEffectIdentifier.STREAM_CODEC,
+            CustomStatusEffect::getId,
+            CustomStatusEffectPlaylist.STREAM_CODEC,
+            CustomStatusEffect::getPlaylist,
+            CustomStatusEffect::new);
     private final CustomStatusEffectIdentifier id;
     private final CustomStatusEffectPlaylist playlist;
 
@@ -60,12 +65,12 @@ public class CustomStatusEffect {
         return this.playlist.getActiveAmplifier();
     }
 
-    public boolean addFrom(CustomStatusEffect statusEffect) {
-        return this.playlist.addFrom(statusEffect.playlist);
+    public boolean merge(CustomStatusEffect statusEffect) {
+        return this.playlist.addAll(statusEffect.playlist);
     }
 
-    public boolean addTo(CustomStatusEffect statusEffect) {
-        return statusEffect.addFrom(this);
+    public boolean mergeTo(CustomStatusEffect statusEffect) {
+        return statusEffect.merge(this);
     }
 
     public boolean addTo(CustomStatusEffectManager manager) {

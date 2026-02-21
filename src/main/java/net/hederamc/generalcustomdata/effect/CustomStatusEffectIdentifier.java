@@ -1,5 +1,6 @@
 package net.hederamc.generalcustomdata.effect;
 
+import io.netty.buffer.ByteBuf;
 import java.util.HashMap;
 import java.util.Map;
 import net.hederamc.genericregistry.registry.Registries;
@@ -7,9 +8,17 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
 public final class CustomStatusEffectIdentifier {
+    public static final StreamCodec<ByteBuf, CustomStatusEffectIdentifier> STREAM_CODEC = StreamCodec.composite(
+            Identifier.STREAM_CODEC,
+            CustomStatusEffectIdentifier::getId,
+            ByteBufCodecs.INT,
+            CustomStatusEffectIdentifier::getColor,
+            CustomStatusEffectIdentifier::new);
     private final Identifier id;
     private final int color;
 
