@@ -7,14 +7,15 @@ import org.jspecify.annotations.Nullable;
 public interface CustomOwnerHolder extends CustomDataHolder {
     @Nullable
     default String getCustomOwner() {
-        return this.getCustomDataOrEmpty().tag().getStringOr("owner", null);
+        return this.getCustomDataOrEmpty().getTag().getStringOr("owner", null);
     }
 
     default void setCustomOwner(String owner) {
-        this.getOrCreateCustomData().tag().putString("owner", owner);
+        this.getOrCreateCustomData().getTag().putString("owner", owner);
     }
 
+    @Nullable
     default StringTag removeCustomOwner() {
-        return (StringTag)this.getCustomDataOrEmpty().tag().remove("owner");
+        return (StringTag)this.getCustomDataOrEmpty().getTag().remove("owner");
     }
 }

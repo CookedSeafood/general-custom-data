@@ -11,15 +11,16 @@ import org.jspecify.annotations.Nullable;
 
 public interface CustomStatusEffectsHolder extends CustomDataHolder {
     default ListTag getCustomStatusEffects() {
-        return this.getCustomDataOrEmpty().tag().getListOrEmpty("status_effects");
+        return this.getCustomDataOrEmpty().getTag().getListOrEmpty("status_effects");
     }
 
     default void setCustomStatusEffects(ListTag statusEffects) {
-        this.getOrCreateCustomData().tag().put("status_effects", statusEffects);
+        this.getOrCreateCustomData().getTag().put("status_effects", statusEffects);
     }
 
+    @Nullable
     default ListTag removeCustomStatusEffects() {
-        return (ListTag)this.getCustomDataOrEmpty().tag().remove("status_effects");
+        return (ListTag)this.getCustomDataOrEmpty().getTag().remove("status_effects");
     }
 
     default CustomStatusEffectManager getCustomStatusEffectManager() {

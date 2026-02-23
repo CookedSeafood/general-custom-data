@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin implements CustomModifiersHolder, Custom
 
     @Override
     public ListTag getCustomModifiers() {
-        ListTag modifiers = this.getCustomDataOrEmpty().tag().getListOrEmpty("modifiers");
+        ListTag modifiers = this.getCustomDataOrEmpty().getTag().getListOrEmpty("modifiers");
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             String name = slot.getName();
             this.getItemBySlot(slot).getCustomModifiers().stream()

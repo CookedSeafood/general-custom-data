@@ -4,18 +4,20 @@ import net.hederamc.fishbonetrehalose.api.CustomDataHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.apache.commons.lang3.mutable.MutableDouble;
+import org.jspecify.annotations.Nullable;
 
 public interface CustomModifiersHolder extends CustomDataHolder {
     default ListTag getCustomModifiers() {
-        return this.getCustomDataOrEmpty().tag().getListOrEmpty("modifiers");
+        return this.getCustomDataOrEmpty().getTag().getListOrEmpty("modifiers");
     }
 
     default void setCustomModifiers(ListTag modifiers) {
-        this.getOrCreateCustomData().tag().put("modifiers", modifiers);
+        this.getOrCreateCustomData().getTag().put("modifiers", modifiers);
     }
 
+    @Nullable
     default ListTag removeCustomModifiers() {
-        return (ListTag)this.getCustomDataOrEmpty().tag().remove("modifiers");
+        return (ListTag)this.getCustomDataOrEmpty().getTag().remove("modifiers");
     }
 
     default ListTag getCustomModifiers(String attribute) {
