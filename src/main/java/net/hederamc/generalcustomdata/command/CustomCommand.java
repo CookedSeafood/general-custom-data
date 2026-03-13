@@ -8,6 +8,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import java.util.Collection;
 import java.util.List;
+import net.hederamc.fishbonetrehalose.api.Text;
 import net.hederamc.generalcustomdata.effect.CustomStatusEffect;
 import net.hederamc.generalcustomdata.effect.CustomStatusEffectEpisode;
 import net.hederamc.generalcustomdata.effect.CustomStatusEffectIdentifier;
@@ -17,108 +18,137 @@ import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public class CustomCommand {
-    private static final SimpleCommandExceptionType UNREGISTED_EFFECT_EXCEPTION =
-        new SimpleCommandExceptionType(Component.literal("The effect is not registed"));
-    private static final SimpleCommandExceptionType REQUIRES_LIVING_ENTITY_EXCEPTION =
-        new SimpleCommandExceptionType(Component.literal("A living entity is required to run this command here"));
+    private static final SimpleCommandExceptionType UNREGISTED_EFFECT_EXCEPTION = new SimpleCommandExceptionType(
+            Text.literal("The effect is not registed"));
+    private static final SimpleCommandExceptionType REQUIRES_LIVING_ENTITY_EXCEPTION = new SimpleCommandExceptionType(
+            Text.literal("A living entity is required to run this command here"));
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registryAccess) {
         dispatcher.register(
-            Commands.literal("custom")
-            .then(
-                Commands.literal("effect")
-                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-                .then(
-                    Commands.literal("list")
-                    .executes(context -> executeListEffect(context.getSource()))
-                    .then(
-                        Commands.argument("entities", EntityArgument.entity())
-                        .executes(context -> executeListEffect(context.getSource(), EntityArgument.getEntity(context, "entities")))
-                    )
-                )
-                .then(
-                    Commands.literal("give")
-                    .then(
-                        Commands.argument("entities", EntityArgument.entities())
+                Commands.literal("custom")
                         .then(
-                            Commands.argument("effect", StringArgumentType.string())
-                            .suggests(new CustomStatusEffectSuggestionProvider())
-                            .executes(context -> executeGiveEffect(context.getSource(), EntityArgument.getEntities(context, "entities"), StringArgumentType.getString(context, "effect")))
-                            .then(
-                                Commands.argument("duration", IntegerArgumentType.integer(1))
-                                .executes(context -> executeGiveEffect(context.getSource(), EntityArgument.getEntities(context, "entities"), StringArgumentType.getString(context, "effect"), IntegerArgumentType.getInteger(context, "duration")))
-                                .then(
-                                    Commands.argument("amplifier", IntegerArgumentType.integer(0))
-                                    .executes(context -> executeGiveEffect(context.getSource(), EntityArgument.getEntities(context, "entities"), StringArgumentType.getString(context, "effect"), IntegerArgumentType.getInteger(context, "duration"), IntegerArgumentType.getInteger(context, "amplifier")))
-                                )
-                            )
-                            .then(
-                                Commands.literal("infinite")
-                                .executes(context -> executeGiveEffect(context.getSource(), EntityArgument.getEntities(context, "entities"), StringArgumentType.getString(context, "effect"), -1))
-                                .then(
-                                    Commands.argument("amplifier", IntegerArgumentType.integer(0))
-                                    .executes(context -> executeGiveEffect(context.getSource(), EntityArgument.getEntities(context, "entities"), StringArgumentType.getString(context, "effect"), -1, IntegerArgumentType.getInteger(context, "amplifier")))
-                                )
-                            )
-                        )
-                    )
-                )
-                .then(
-                    Commands.literal("clear")
-                    .executes(context -> executeClearEffect(context.getSource()))
-                    .then(
-                        Commands.argument("entities", EntityArgument.entities())
-                        .executes(context -> executeClearEffect(context.getSource(), EntityArgument.getEntities(context, "entities")))
-                        .then(
-                            Commands.argument("effect", StringArgumentType.string())
-                            .suggests(new CustomStatusEffectSuggestionProvider())
-                            .executes(context -> executeClearEffect(context.getSource(), EntityArgument.getEntities(context, "entities"), StringArgumentType.getString(context, "effect")))
-                        )
-                    )
-                )
-            )
-        );
+                                Commands.literal("effect")
+                                        .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                                        .then(
+                                                Commands.literal("list")
+                                                        .executes(
+                                                                context -> listEffect(
+                                                                        context.getSource()))
+                                                        .then(
+                                                                Commands.argument("entities", EntityArgument.entity())
+                                                                        .executes(
+                                                                                context -> listEffect(
+                                                                                        context.getSource(),
+                                                                                        EntityArgument.getEntity(context, "entities")))))
+                                        .then(
+                                                Commands.literal("give")
+                                                        .then(
+                                                                Commands.argument("entities", EntityArgument.entities())
+                                                                        .then(
+                                                                                Commands.argument("effect", StringArgumentType.string())
+                                                                                        .suggests(new CustomStatusEffectSuggestionProvider())
+                                                                                        .executes(
+                                                                                                context -> giveEffect(
+                                                                                                        context.getSource(),
+                                                                                                        EntityArgument.getEntities(context, "entities"),
+                                                                                                        StringArgumentType.getString(context, "effect")))
+                                                                                        .then(
+                                                                                                Commands.argument("duration", IntegerArgumentType.integer(1))
+                                                                                                        .executes(
+                                                                                                                context -> giveEffect(
+                                                                                                                        context.getSource(),
+                                                                                                                        EntityArgument.getEntities(context, "entities"),
+                                                                                                                        StringArgumentType.getString(context, "effect"),
+                                                                                                                        IntegerArgumentType.getInteger(context, "duration")))
+                                                                                                        .then(
+                                                                                                                Commands.argument("amplifier", IntegerArgumentType.integer(0))
+                                                                                                                        .executes(
+                                                                                                                                context -> giveEffect(
+                                                                                                                                        context.getSource(),
+                                                                                                                                        EntityArgument.getEntities(context, "entities"),
+                                                                                                                                        StringArgumentType.getString(context, "effect"),
+                                                                                                                                        IntegerArgumentType.getInteger(context, "duration"),
+                                                                                                                                        IntegerArgumentType.getInteger(context, "amplifier")))))
+                                                                                        .then(
+                                                                                                Commands.literal("infinite")
+                                                                                                        .executes(
+                                                                                                                context -> giveEffect(
+                                                                                                                        context.getSource(),
+                                                                                                                        EntityArgument.getEntities(context, "entities"),
+                                                                                                                        StringArgumentType.getString(context, "effect"),
+                                                                                                                        -1))
+                                                                                                        .then(
+                                                                                                                Commands.argument("amplifier", IntegerArgumentType.integer(0))
+                                                                                                                        .executes(
+                                                                                                                                context -> giveEffect(
+                                                                                                                                        context.getSource(),
+                                                                                                                                        EntityArgument.getEntities(context, "entities"),
+                                                                                                                                        StringArgumentType.getString(context, "effect"),
+                                                                                                                                        -1,
+                                                                                                                                        IntegerArgumentType.getInteger(context, "amplifier"))))))))
+                                        .then(
+                                                Commands.literal("clear")
+                                                        .executes(
+                                                                context -> clearEffect(
+                                                                        context.getSource()))
+                                                        .then(
+                                                                Commands.argument("entities", EntityArgument.entities())
+                                                                        .executes(
+                                                                                context -> clearEffect(
+                                                                                        context.getSource(),
+                                                                                        EntityArgument.getEntities(context, "entities")))
+                                                                        .then(
+                                                                                Commands.argument("effect", StringArgumentType.string())
+                                                                                        .suggests(new CustomStatusEffectSuggestionProvider())
+                                                                                        .executes(
+                                                                                                context -> clearEffect(
+                                                                                                        context.getSource(),
+                                                                                                        EntityArgument.getEntities(context, "entities"),
+                                                                                                        StringArgumentType.getString(context, "effect"))))))));
     }
 
-    public static int executeListEffect(CommandSourceStack source) throws CommandSyntaxException {
-        return executeListEffect(source, source.getEntityOrException());
+    public static int listEffect(CommandSourceStack source) throws CommandSyntaxException {
+        return listEffect(source, source.getEntityOrException());
     }
 
-    public static int executeListEffect(CommandSourceStack source, Entity target) throws CommandSyntaxException {
+    public static int listEffect(CommandSourceStack source, Entity target) throws CommandSyntaxException {
         if (!(target instanceof LivingEntity)) {
             throw REQUIRES_LIVING_ENTITY_EXCEPTION.create();
         }
 
-        CustomStatusEffectManager manager = ((LivingEntity)target).getCustomStatusEffectManager();
+        CustomStatusEffectManager manager = ((LivingEntity) target).getCustomStatusEffectManager();
 
         if (manager.isEmpty()) {
-            source.sendSuccess(() -> Component.literal("Target has no custom status effect"), false);
+            source.sendSuccess(() -> Text.literal("Target has no custom status effect"), false);
             return 0;
         }
 
-        MutableComponent feedback = Component.literal("Target has "+ manager.size() + " custom status effects:");
+        Text feedback = Text.literal("Target has " + manager.size() + " custom status effects:");
         manager.forEach(effect -> feedback.append("\n" + effect.getId().getId().toString() + " " + effect.getPlaylist().getActiveEpisode().toString()));
-        source.sendSuccess(() -> feedback, false);
+        source.sendSuccess(() -> (MutableComponent) feedback, false);
         return 0;
     }
 
-    public static int executeGiveEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect) throws CommandSyntaxException {
-        return executeGiveEffect(source, targets, effect, 1, 0);
+    public static int giveEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect)
+            throws CommandSyntaxException {
+        return giveEffect(source, targets, effect, 1);
     }
 
-    public static int executeGiveEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect, int duration) throws CommandSyntaxException {
-        return executeGiveEffect(source, targets, effect, duration, 0);
+    public static int giveEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect,
+            int duration) throws CommandSyntaxException {
+        return giveEffect(source, targets, effect, duration, 0);
     }
 
-    public static int executeGiveEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect, int duration, int amplifier) throws CommandSyntaxException {
-        CustomStatusEffectIdentifier id = CustomStatusEffectIdentifier.fromRegistry(Identifier.bySeparator(effect, '.'));
+    public static int giveEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect,
+            int duration, int amplifier) throws CommandSyntaxException {
+        CustomStatusEffectIdentifier id = CustomStatusEffectIdentifier.fromRegistry(
+                Identifier.bySeparator(effect, '.'));
 
         if (id == null) {
             UNREGISTED_EFFECT_EXCEPTION.create();
@@ -129,50 +159,58 @@ public class CustomCommand {
                 continue;
             }
 
-            ((LivingEntity)target).addCustomStatusEffect(CustomStatusEffect.of(id).withEpisode(CustomStatusEffectEpisode.of(duration, amplifier)));
+            ((LivingEntity) target).addCustomStatusEffect(
+                    CustomStatusEffect.of(id).withEpisode(CustomStatusEffectEpisode.of(duration, amplifier)));
         }
 
         int count = targets.size();
-
         if (count == 1) {
-            source.sendSuccess(() -> Component.literal("Applied effect " + id.getId().toString() + " to ").append(targets.iterator().next().getDisplayName()), true);
+            source.sendSuccess(
+                    () -> Text.fromEmpty()
+                            .append("Applied effect " + id.getId().toString() + " to ")
+                            .append(targets.iterator().next().getDisplayName()),
+                    true);
         } else {
-            source.sendSuccess(() -> Component.literal("Applied effect " + id.getId().toString() + " to " + count + " targets"), true);
+            source.sendSuccess(
+                    () -> Text.literal("Applied effect " + id.getId().toString() + " to " + count + " targets"),
+                    true);
         }
 
         return Command.SINGLE_SUCCESS;
     }
 
-    public static int executeClearEffect(CommandSourceStack source) throws CommandSyntaxException {
-        return executeClearEffect(source, source.getEntityOrException());
+    public static int clearEffect(CommandSourceStack source) throws CommandSyntaxException {
+        return clearEffect(source, List.of(source.getEntityOrException()));
     }
 
-    public static int executeClearEffect(CommandSourceStack source, Entity target) {
-        return executeClearEffect(source, List.of(target));
-    }
-
-    public static int executeClearEffect(CommandSourceStack source, Collection<? extends Entity> targets) {
+    public static int clearEffect(CommandSourceStack source, Collection<? extends Entity> targets) {
         for (Entity target : targets) {
             if (!(target instanceof LivingEntity)) {
                 continue;
             }
 
-            ((LivingEntity)target).clearCustomStatusEffect();
+            ((LivingEntity) target).clearCustomStatusEffect();
         }
 
         int count = targets.size();
-
         if (count == 1) {
-            source.sendSuccess(() -> Component.literal("Removed every effect from ").append(targets.iterator().next().getDisplayName()), true);
+            source.sendSuccess(
+                    () -> Text.fromEmpty()
+                            .append("Removed every effect from ")
+                            .append(targets.iterator().next().getDisplayName()),
+                    true);
         } else {
-            source.sendSuccess(() -> Component.literal("Removed every effect from " + count + " targets"), true);
+            source.sendSuccess(
+                    () -> Text.literal("Removed every effect from " + count + " targets"),
+                    true);
         }
 
         return Command.SINGLE_SUCCESS;
     }
 
-    public static int executeClearEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect) {
-        CustomStatusEffectIdentifier id = CustomStatusEffectIdentifier.fromRegistry(Identifier.bySeparator(effect, '.'));
+    public static int clearEffect(CommandSourceStack source, Collection<? extends Entity> targets, String effect) {
+        CustomStatusEffectIdentifier id = CustomStatusEffectIdentifier.fromRegistry(
+                Identifier.bySeparator(effect, '.'));
 
         if (id == null) {
             UNREGISTED_EFFECT_EXCEPTION.create();
@@ -183,15 +221,20 @@ public class CustomCommand {
                 continue;
             }
 
-            ((LivingEntity)target).removeCustomStatusEffect(id);
+            ((LivingEntity) target).removeCustomStatusEffect(id);
         }
 
         int count = targets.size();
-
         if (count == 1) {
-            source.sendSuccess(() -> Component.literal("Removed effect " + id.getId().toString() + " from ").append(targets.iterator().next().getDisplayName()), true);
+            source.sendSuccess(
+                    () -> Text.fromEmpty()
+                            .append("Removed effect " + id.getId().toString() + " from ")
+                            .append(targets.iterator().next().getDisplayName()),
+                    true);
         } else {
-            source.sendSuccess(() -> Component.literal("Removed effect " + id.getId().toString() + " from " + count + " targets"), true);
+            source.sendSuccess(
+                    () -> Text.literal("Removed effect " + id.getId().toString() + " from " + count + " targets"),
+                    true);
         }
 
         return Command.SINGLE_SUCCESS;

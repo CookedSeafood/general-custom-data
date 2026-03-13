@@ -24,7 +24,7 @@ public interface CustomIdHolder extends CustomDataHolder {
 
     @Nullable
     default StringTag removeCustomId() {
-        return (StringTag)this.getCustomDataOrEmpty().getTag().remove("id");
+        return (StringTag) this.getCustomDataOrEmpty().getTag().remove("id");
     }
 
     default Identifier getCustomIdOrId() {

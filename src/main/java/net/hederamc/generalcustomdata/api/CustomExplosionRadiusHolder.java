@@ -6,7 +6,7 @@ import org.jspecify.annotations.Nullable;
 
 public interface CustomExplosionRadiusHolder extends CustomDataHolder {
     default byte getCustomExplosionRadius() {
-        return this.getCustomDataOrEmpty().getTag().getByteOr("explosion_radius", (byte)0);
+        return this.getCustomDataOrEmpty().getTag().getByteOr("explosion_radius", (byte) 0);
     }
 
     default void setCustomExplosionRadius(byte radius) {
@@ -15,6 +15,6 @@ public interface CustomExplosionRadiusHolder extends CustomDataHolder {
 
     @Nullable
     default ByteTag removeCustomExplosionRadius() {
-        return (ByteTag)this.getCustomDataOrEmpty().getTag().remove("explosion_radius");
+        return (ByteTag) this.getCustomDataOrEmpty().getTag().remove("explosion_radius");
     }
 }

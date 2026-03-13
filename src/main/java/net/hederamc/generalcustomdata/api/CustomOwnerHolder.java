@@ -16,6 +16,6 @@ public interface CustomOwnerHolder extends CustomDataHolder {
 
     @Nullable
     default StringTag removeCustomOwner() {
-        return (StringTag)this.getCustomDataOrEmpty().getTag().remove("owner");
+        return (StringTag) this.getCustomDataOrEmpty().getTag().remove("owner");
     }
 }

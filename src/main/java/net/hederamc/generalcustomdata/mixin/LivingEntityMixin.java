@@ -14,13 +14,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements CustomModifiersHolder, CustomStatusEffectsHolder {
+public abstract class LivingEntityMixin extends EntityMixin implements CustomModifiersHolder, CustomStatusEffectsHolder {
     @Inject(
         method = "tick()V",
         at = @At("TAIL")
     )
     private void tickCustomStatusEffect(CallbackInfo info) {
-        if (((LivingEntity)(Object)this).level().isClientSide()) {
+        if (this.level().isClientSide()) {
             return;
         }
 
@@ -45,9 +45,9 @@ public abstract class LivingEntityMixin implements CustomModifiersHolder, Custom
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             String name = slot.getName();
             this.getItemBySlot(slot).getCustomModifiers().stream()
-                .map(CompoundTag.class::cast)
-                .filter(modifier -> modifier.getStringOr("slot", name).equals(name))
-                .forEach(modifier -> modifiers.add(modifier));
+                    .map(CompoundTag.class::cast)
+                    .filter(modifier -> modifier.getStringOr("slot", name).equals(name))
+                    .forEach(modifier -> modifiers.add(modifier));
         }
 
         return modifiers;

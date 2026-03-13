@@ -6,7 +6,7 @@ import org.jspecify.annotations.Nullable;
 
 public interface CustomFuseHolder extends CustomDataHolder {
     default short getCustomFuse() {
-        return this.getCustomDataOrEmpty().getTag().getShortOr("fuse", (short)0);
+        return this.getCustomDataOrEmpty().getTag().getShortOr("fuse", (short) 0);
     }
 
     default void setCustomFuse(short fuse) {
@@ -15,6 +15,6 @@ public interface CustomFuseHolder extends CustomDataHolder {
 
     @Nullable
     default ShortTag removeCustomFuse() {
-        return (ShortTag)this.getCustomDataOrEmpty().getTag().remove("fuse");
+        return (ShortTag) this.getCustomDataOrEmpty().getTag().remove("fuse");
     }
 }

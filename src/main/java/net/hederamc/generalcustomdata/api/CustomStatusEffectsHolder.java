@@ -20,7 +20,7 @@ public interface CustomStatusEffectsHolder extends CustomDataHolder {
 
     @Nullable
     default ListTag removeCustomStatusEffects() {
-        return (ListTag)this.getCustomDataOrEmpty().getTag().remove("status_effects");
+        return (ListTag) this.getCustomDataOrEmpty().getTag().remove("status_effects");
     }
 
     default CustomStatusEffectManager getCustomStatusEffectManager() {
@@ -35,10 +35,11 @@ public interface CustomStatusEffectsHolder extends CustomDataHolder {
      * Returns the effect of which the specific id is the id, or
      * {@code null} if this holder has no such effect.
      *
-     * <p>More formally, if this holder has an effect with an id
+     * <p>
+     * More formally, if this holder has an effect with an id
      * {@code i} such that {@code Objects.equals(id, i)},
      * then this method returns the effect; otherwise it
-     * returns {@code null}.  (There can be at most one such effect.)
+     * returns {@code null}. (There can be at most one such effect.)
      *
      * The returned effect will not be ticked, nor be backed up by
      * any storage.
@@ -70,7 +71,7 @@ public interface CustomStatusEffectsHolder extends CustomDataHolder {
     }
 
     default boolean addCustomStatusEffect(CustomStatusEffect statusEffect) {
-        return this.modifyCustomStatusEffectManager((Function<CustomStatusEffectManager, Boolean>)statusEffect::addTo);
+        return this.modifyCustomStatusEffectManager((Function<CustomStatusEffectManager, Boolean>) statusEffect::addTo);
     }
 
     default boolean setCustomStatusEffect(CustomStatusEffect statusEffect) {

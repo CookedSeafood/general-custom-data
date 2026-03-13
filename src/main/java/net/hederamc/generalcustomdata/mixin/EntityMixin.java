@@ -7,11 +7,13 @@ import net.hederamc.generalcustomdata.api.CustomIdHolder;
 import net.hederamc.generalcustomdata.api.CustomOwnerHolder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin
-        implements CustomExplosionRadiusHolder, CustomFuseHolder, CustomIdHolder, CustomOwnerHolder, EntityTypeHolder {
+public abstract class EntityMixin implements CustomExplosionRadiusHolder, CustomFuseHolder, CustomIdHolder,
+        CustomOwnerHolder, EntityTypeHolder {
     @Override
     public Identifier getCustomIdOrId() {
         Identifier customId = this.getCustomId();
@@ -22,4 +24,7 @@ public abstract class EntityMixin
 
         return customId;
     }
+
+    @Shadow
+    public abstract Level level();
 }

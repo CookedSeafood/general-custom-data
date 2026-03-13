@@ -17,14 +17,14 @@ public interface CustomModifiersHolder extends CustomDataHolder {
 
     @Nullable
     default ListTag removeCustomModifiers() {
-        return (ListTag)this.getCustomDataOrEmpty().getTag().remove("modifiers");
+        return (ListTag) this.getCustomDataOrEmpty().getTag().remove("modifiers");
     }
 
     default ListTag getCustomModifiers(String attribute) {
         return this.getCustomModifiers().parallelStream()
-            .map(CompoundTag.class::cast)
-            .filter(modifier -> attribute.equals(modifier.getStringOr("attribute", "")))
-            .collect(ListTag::new, ListTag::add, ListTag::addAll);
+                .map(CompoundTag.class::cast)
+                .filter(modifier -> attribute.equals(modifier.getStringOr("attribute", "")))
+                .collect(ListTag::new, ListTag::add, ListTag::addAll);
     }
 
     default double getCustomModifiedValue(String attribute, double base) {
@@ -32,23 +32,23 @@ public interface CustomModifiersHolder extends CustomDataHolder {
         MutableDouble modified = new MutableDouble(base);
 
         modifiers.parallelStream()
-            .map(CompoundTag.class::cast)
-            .filter(modifier -> "add_value".equals(modifier.getStringOr("operation", "add_value")))
-            .forEach(modifier -> modified.add(modifier.getDoubleOr("base", 0.0)));
+                .map(CompoundTag.class::cast)
+                .filter(modifier -> "add_value".equals(modifier.getStringOr("operation", "add_value")))
+                .forEach(modifier -> modified.add(modifier.getDoubleOr("base", 0.0)));
 
         MutableDouble multiplier = new MutableDouble(1.0);
 
         modifiers.parallelStream()
-            .map(CompoundTag.class::cast)
-            .filter(modifier -> "add_multiplied_base".equals(modifier.getStringOr("operation", "add_value")))
-            .forEach(modifier -> multiplier.add(modifier.getDoubleOr("base", 0.0)));
+                .map(CompoundTag.class::cast)
+                .filter(modifier -> "add_multiplied_base".equals(modifier.getStringOr("operation", "add_value")))
+                .forEach(modifier -> multiplier.add(modifier.getDoubleOr("base", 0.0)));
 
         modified.setValue(modified.doubleValue() * multiplier.doubleValue());
 
         modifiers.parallelStream()
-            .map(CompoundTag.class::cast)
-            .filter(modifier -> "add_multiplied_total".equals(modifier.getStringOr("operation", "add_value")))
-            .forEach(modifier -> modified.setValue((1.0 + modifier.getDoubleOr("base", 0.0)) * modified.doubleValue()));
+                .map(CompoundTag.class::cast)
+                .filter(modifier -> "add_multiplied_total".equals(modifier.getStringOr("operation", "add_value")))
+                .forEach(modifier -> modified.setValue((1.0 + modifier.getDoubleOr("base", 0.0)) * modified.doubleValue()));
 
         return modified.doubleValue();
     }

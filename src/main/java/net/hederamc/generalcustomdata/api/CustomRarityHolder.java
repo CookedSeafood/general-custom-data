@@ -2,7 +2,7 @@ package net.hederamc.generalcustomdata.api;
 
 import net.hederamc.fishbonetrehalose.api.CustomDataHolder;
 import net.hederamc.fishbonetrehalose.api.RarityHolder;
-import net.hederamc.fishbonetrehalose.util.Rarities;
+import net.hederamc.fishbonetrehalose.util.RarityUtil;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.world.item.Rarity;
 import org.jspecify.annotations.Nullable;
@@ -19,7 +19,7 @@ public interface CustomRarityHolder extends RarityHolder, CustomDataHolder {
 
     @Nullable
     default StringTag removeCustomRarity() {
-        return (StringTag)this.getCustomDataOrEmpty().getTag().remove("rarity");
+        return (StringTag) this.getCustomDataOrEmpty().getTag().remove("rarity");
     }
 
     default String getCustomRarityOrRarity() {
@@ -33,7 +33,7 @@ public interface CustomRarityHolder extends RarityHolder, CustomDataHolder {
     }
 
     default void setRarityOrCustomRarity(String rarity) {
-        Rarity vanillaRarity = Rarities.byName(rarity);
+        Rarity vanillaRarity = RarityUtil.byName(rarity);
 
         if (vanillaRarity == null) {
             this.setCustomRarity(rarity);
